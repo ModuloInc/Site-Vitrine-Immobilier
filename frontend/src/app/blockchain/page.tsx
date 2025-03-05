@@ -2,7 +2,7 @@
 
 import {ConnectButton} from '@rainbow-me/rainbowkit';
 import {useAccount, useWriteContract, useReadContract} from 'wagmi';
-import {HETIC_ABI} from "../../../public/hetic";
+import {HETIC_ABI} from "../abi/hetic";
 
 export default function blockchain() {
     const {writeContract} = useWriteContract()
