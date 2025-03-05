@@ -33,7 +33,7 @@ const Navbar: React.FC = () => {
     // Check if already connected
     if (window.ethereum) {
       window.ethereum.request({ method: 'eth_accounts' })
-          .then(accounts => {
+          .then((accounts: string) => {
             if (accounts.length > 0) {
               connectWallet();
             }

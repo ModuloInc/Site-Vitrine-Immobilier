@@ -168,7 +168,7 @@ export default function HomePage() {
         // Vérifier si le wallet est déjà connecté
         if (window.ethereum) {
             window.ethereum.request({ method: 'eth_accounts' })
-                .then(accounts => {
+                .then((accounts: any) => {
                     if (accounts.length > 0) {
                         setIsConnected(true);
                         setUserAddress(accounts[0]);
