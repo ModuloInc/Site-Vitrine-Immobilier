@@ -1,0 +1,52 @@
+[
+  {
+    "id": "1",
+    "title": "Villa de luxe avec piscine",
+    "description": "Magnifique villa avec vue sur la mer, piscine privée et jardin luxuriant.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "10",
+    "size": "250",
+    "location": "Cannes, France",
+    "isForSale": true
+  },
+  {
+    "id": "2",
+    "title": "Appartement en centre-ville",
+    "description": "Appartement moderne avec 3 chambres, proche de toutes commodités.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "5",
+    "size": "120",
+    "location": "Paris, France",
+    "isForSale": true
+  },
+  {
+    "id": "3",
+    "title": "Maison de campagne",
+    "description": "Charmante maison avec grand terrain dans un environnement calme et verdoyant.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "7.5",
+    "size": "180",
+    "location": "Provence, France",
+    "isForSale": true
+  },
+  {
+    "id": "4",
+    "title": "Loft industriel",
+    "description": "Spacieux loft dans un ancien bâtiment industriel, entièrement rénové avec goût.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "6.2",
+    "size": "150",
+    "location": "Lyon, France",
+    "isForSale": true
+  },
+  {
+    "id": "5",
+    "title": "Chalet de montagne",
+    "description": "Authentique chalet avec vue imprenable sur les montagnes, idéal pour les amateurs de sports d'hiver.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "8.7",
+    "size": "200",
+    "location": "Chamonix, France",
+    "isForSale": true
+  }
+]
