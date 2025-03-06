@@ -8,6 +8,7 @@ import Navbar from "@/app/component/Navbar";
 import Footer from "@/app/component/Footer";
 import {HETIC_ABI} from "@/app/abi/hetic";
 import Scene from "@/app/component/CoinView";
+import { loadProperties } from '@/app/utils/propertyUtils';
 
 export default function HomePage() {
     const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
@@ -21,44 +22,8 @@ export default function HomePage() {
     const [mintAmount, setMintAmount] = useState<string>("100");
     const [isMinting, setIsMinting] = useState<boolean>(false);
 
-    // Adresse du contrat
-    const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // À remplacer par votre adresse réelle
+    const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
-    // Données fictives pour les propriétés (à remplacer par les vraies données de votre contrat)
-    const sampleProperties = [
-        {
-            id: "1",
-            title: "Villa de luxe avec piscine",
-            description: "Magnifique villa avec vue sur la mer, piscine privée et jardin luxuriant.",
-            imageUrl: "https://picsum.photos/id/193/400/300",
-            price: ethers.utils.parseEther("10"),
-            size: "250",
-            location: "Cannes, France",
-            isForSale: true
-        },
-        {
-            id: "2",
-            title: "Appartement en centre-ville",
-            description: "Appartement moderne avec 3 chambres, proche de toutes commodités.",
-            imageUrl: "https://picsum.photos/id/193/400/300",
-            price: ethers.utils.parseEther("5"),
-            size: "120",
-            location: "Paris, France",
-            isForSale: true
-        },
-        {
-            id: "3",
-            title: "Maison de campagne",
-            description: "Charmante maison avec grand terrain dans un environnement calme et verdoyant.",
-            imageUrl: "https://picsum.photos/id/193/400/300",
-            price: ethers.utils.parseEther("7.5"),
-            size: "180",
-            location: "Provence, France",
-            isForSale: true
-        }
-    ];
-
-    // Fonction pour se connecter au wallet
     const connectWallet = async () => {
         try {
             if (window.ethereum) {
@@ -66,7 +31,6 @@ export default function HomePage() {
                 setIsConnected(true);
                 setUserAddress(accounts[0]);
 
-                // Charger les informations du contrat et le solde du token
                 loadContractInfo(accounts[0]);
             } else {
                 alert("Veuillez installer MetaMask pour utiliser cette application");
@@ -76,7 +40,6 @@ export default function HomePage() {
         }
     };
 
-    // Charger les informations du contrat
     const loadContractInfo = async (userAddress: string) => {
         try {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -86,7 +49,6 @@ export default function HomePage() {
                 provider
             );
 
-            // Récupérer les informations du token
             const name = await contract.name();
             const symbol = await contract.symbol();
             const balance = await contract.balanceOf(userAddress);
@@ -99,7 +61,6 @@ export default function HomePage() {
         }
     };
 
-    // Mint des tokens HETIC
     const mintTokens = async () => {
         try {
             setIsMinting(true);
@@ -112,14 +73,11 @@ export default function HomePage() {
                     signer
                 );
 
-                // Convertir le montant en wei
                 const amountToMint = ethers.utils.parseEther(mintAmount);
 
-                // Mint des tokens pour l'utilisateur
                 const tx = await contract.mint(userAddress, amountToMint);
                 await tx.wait();
 
-                // Recharger le solde
                 loadContractInfo(userAddress);
 
                 alert(`${mintAmount} ${tokenSymbol} ont été mintés avec succès!`);
@@ -132,13 +90,16 @@ export default function HomePage() {
         }
     };
 
-    // Achat d'une propriété avec le token HETIC
     const handleBuy = async (propertyId: string, price: ethers.BigNumber): Promise<void> => {
         try {
             if (!isConnected) {
                 alert("Veuillez d'abord connecter votre wallet");
                 return;
             }
+
+            // Demander confirmation à l'utilisateur
+            const confirmPurchase = window.confirm(`Confirmez-vous l'achat de cette propriété pour ${ethers.utils.formatEther(price)} ${tokenSymbol}?`);
+            if (!confirmPurchase) return;
 
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
@@ -148,17 +109,66 @@ export default function HomePage() {
                 signer
             );
 
-            // Dans un vrai scénario, vous appelleriez ici une fonction de votre contrat pour acheter la propriété
-            // Pour l'exemple, nous simulons juste un paiement avec les tokens HETIC
-            alert(`Vous allez acheter la propriété ${propertyId} pour ${ethers.utils.formatEther(price)} ${tokenSymbol}`);
+            // Vérifiez d'abord le solde
+            const userBalance = await contract.balanceOf(userAddress);
+            if (userBalance.lt(price)) {
+                alert(`Solde insuffisant. Vous avez ${ethers.utils.formatEther(userBalance)} ${tokenSymbol} mais la propriété coûte ${ethers.utils.formatEther(price)} ${tokenSymbol}`);
+                return;
+            }
 
-            // Ici, vous pourriez avoir une fonction comme:
-            // await contract.buyProperty(propertyId, { gasLimit: 1000000 });
-            // Ou un transfert de token vers le vendeur:
-            // await contract.transfer(sellerAddress, price);
+            try {
+                // Vérifier l'allowance actuelle
+                const allowance = await contract.allowance(userAddress, contractAddress);
 
-            // Charger à nouveau le solde après la transaction
-            loadContractInfo(userAddress);
+                // Si l'allowance est insuffisante, demander une approbation
+                if (allowance.lt(price)) {
+                    const approveTx = await contract.approve(contractAddress, price);
+                    await approveTx.wait();
+                    console.log("Approbation accordée");
+                }
+
+                // Simuler l'achat (dans un contrat réel, vous appelleriez une fonction comme buyProperty)
+                const tx = await contract.transfer(contractAddress, price);
+                const receipt = await tx.wait();
+
+                console.log("Transaction effectuée:", receipt);
+
+                // Stocker la propriété achetée dans le localStorage
+                const purchasedProperties = JSON.parse(localStorage.getItem('purchasedProperties') || '[]');
+
+                // Trouver la propriété complète à partir de l'ID
+                const purchasedProperty = featuredProperties.find(prop => prop.id === propertyId);
+
+                if (purchasedProperty) {
+                    // Marquer la propriété comme achetée (non disponible)
+                    purchasedProperty.isForSale = false;
+
+                    // Ajouter des informations d'achat
+                    const propertyWithPurchaseInfo = {
+                        ...purchasedProperty,
+                        purchaseDate: new Date().toISOString(),
+                        purchasePrice: ethers.utils.formatEther(price) + " " + tokenSymbol
+                    };
+
+                    // Ajouter aux propriétés achetées
+                    purchasedProperties.push(propertyWithPurchaseInfo);
+                    localStorage.setItem('purchasedProperties', JSON.stringify(purchasedProperties));
+
+                    // Mettre à jour la liste des propriétés affichées
+                    const updatedProperties = featuredProperties.map(prop =>
+                        prop.id === propertyId ? {...prop, isForSale: false} : prop
+                    );
+                    setFeaturedProperties(updatedProperties);
+                }
+
+                alert(`Achat réussi! La propriété ${propertyId} est désormais à vous. Vous pouvez la retrouver dans "Mes Propriétés".`);
+
+                // Rafraîchir le solde
+                loadContractInfo(userAddress);
+            } catch (error) {
+                console.error("Erreur lors de la transaction:", error);
+                alert("La transaction a échoué. Veuillez réessayer.");
+            }
         } catch (error) {
             console.error("Erreur lors de l'achat:", error);
             alert("Erreur lors de l'achat. Veuillez vérifier votre solde et réessayer.");
@@ -191,9 +201,12 @@ export default function HomePage() {
             });
         }
 
-        // Simuler le chargement des propriétés
+        // Charger les propriétés depuis le fichier JSON
+        const properties = loadProperties();
+
+        // Simuler un temps de chargement
         setTimeout(() => {
-            setFeaturedProperties(sampleProperties);
+            setFeaturedProperties(properties);
             setIsLoading(false);
         }, 1000);
 
@@ -259,7 +272,6 @@ export default function HomePage() {
                     </div>
                 </section>
 
-                {/* Mint Tokens Section (visible seulement si connecté) */}
                 {isConnected && (
                     <section className="py-8 bg-[var(--dark-color)]">
                         <div className="max-w-xl mx-auto px-4">
@@ -304,7 +316,7 @@ export default function HomePage() {
                             </div>
                         ) : error ? (
                             <div className="text-center text-red-500">{error}</div>
-                        ) : featuredProperties.length > 0 ? (
+                        ) : featuredProperties.filter(property => property.isForSale).length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {featuredProperties.map((property, index) => (
                                     <div key={property.id}
@@ -344,7 +356,14 @@ export default function HomePage() {
                                 ))}
                             </div>
                         ) : (
-                            <div className="text-center text-gray-500">Aucune propriété disponible pour le moment</div>
+                            <div className="text-center text-gray-500">
+                                <p>Toutes les propriétés ont été vendues!</p>
+                                <Link href="/my-properties">
+                                    <span className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer block mt-4">
+                                        Voir mes propriétés →
+                                    </span>
+                                </Link>
+                            </div>
                         )}
 
                         <div className="text-center mt-8">

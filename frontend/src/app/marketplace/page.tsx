@@ -1,12 +1,14 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import Navbar from "@/app/component/Navbar";
 import Footer from "@/app/component/Footer";
 import PropertyCard from "@/app/component/Property";
 import { ethers } from 'ethers';
 import { Property } from '../types/property';
 import {HETIC_ABI} from "@/app/abi/hetic";
+import { loadProperties } from '@/app/utils/propertyUtils';
 
 interface FilterState {
     location: string;
@@ -20,6 +22,10 @@ export default function Marketplace() {
     const [properties, setProperties] = useState<Property[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [isConnected, setIsConnected] = useState<boolean>(false);
+    const [userAddress, setUserAddress] = useState<string>("");
+    const [tokenBalance, setTokenBalance] = useState<string>("0");
+    const [tokenSymbol, setTokenSymbol] = useState<string>("HETIC");
     const [filter, setFilter] = useState<FilterState>({
         location: '',
         minPrice: '',
@@ -29,101 +35,76 @@ export default function Marketplace() {
     });
     const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // Remplacez par votre adresse de contrat
 
+    const connectWallet = async () => {
+        try {
+            if (window.ethereum) {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                setIsConnected(true);
+                setUserAddress(accounts[0]);
+                loadContractInfo(accounts[0]);
+            } else {
+                alert("Veuillez installer MetaMask pour utiliser cette application");
+            }
+        } catch (error) {
+            console.error("Erreur lors de la connexion au wallet:", error);
+        }
+    };
+
+    const loadContractInfo = async (address: string) => {
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const contract = new ethers.Contract(
+                contractAddress,
+                HETIC_ABI,
+                provider
+            );
+
+            const symbol = await contract.symbol();
+            const balance = await contract.balanceOf(address);
+
+            setTokenSymbol(symbol);
+            setTokenBalance(ethers.utils.formatEther(balance));
+        } catch (error) {
+            console.error("Erreur lors du chargement des informations du contrat:", error);
+        }
+    };
+
     useEffect(() => {
-        const loadProperties = async (): Promise<void> => {
-            try {
-                const mockProperties: Property[] = [
-                    {
-                        id: "1",
-                        title: "Villa de luxe avec piscine",
-                        description: "Magnifique villa avec vue sur la mer, piscine privée et jardin luxuriant.",
-                        imageUrl: "https://via.placeholder.com/400x300",
-                        price: ethers.utils.parseEther("10"),
-                        size: "250",
-                        location: "Cannes, France",
-                        isForSale: true
-                    },
-                    {
-                        id: "2",
-                        title: "Appartement en centre-ville",
-                        description: "Appartement moderne avec 3 chambres, proche de toutes commodités.",
-                        imageUrl: "https://via.placeholder.com/400x300",
-                        price: ethers.utils.parseEther("5"),
-                        size: "120",
-                        location: "Paris, France",
-                        isForSale: true
-                    },
-                    {
-                        id: "3",
-                        title: "Maison de campagne",
-                        description: "Charmante maison avec grand terrain dans un environnement calme et verdoyant.",
-                        imageUrl: "https://via.placeholder.com/400x300",
-                        price: ethers.utils.parseEther("7.5"),
-                        size: "180",
-                        location: "Provence, France",
-                        isForSale: true
-                    },
-                    {
-                        id: "4",
-                        title: "Loft industriel",
-                        description: "Spacieux loft dans un ancien bâtiment industriel, entièrement rénové avec goût.",
-                        imageUrl: "https://via.placeholder.com/400x300",
-                        price: ethers.utils.parseEther("6.2"),
-                        size: "150",
-                        location: "Lyon, France",
-                        isForSale: true
-                    },
-                    {
-                        id: "5",
-                        title: "Chalet de montagne",
-                        description: "Authentique chalet avec vue imprenable sur les montagnes, idéal pour les amateurs de sports d'hiver.",
-                        imageUrl: "https://via.placeholder.com/400x300",
-                        price: ethers.utils.parseEther("8.7"),
-                        size: "200",
-                        location: "Chamonix, France",
-                        isForSale: true
+        // Vérifier si le wallet est déjà connecté
+        if (window.ethereum) {
+            window.ethereum.request({ method: 'eth_accounts' })
+                .then((accounts: any) => {
+                    if (accounts.length > 0) {
+                        setIsConnected(true);
+                        setUserAddress(accounts[0]);
+                        loadContractInfo(accounts[0]);
                     }
-                ];
+                });
+
+            // Écouter les changements de compte
+            window.ethereum.on('accountsChanged', (accounts: string[]) => {
+                if (accounts.length > 0) {
+                    setIsConnected(true);
+                    setUserAddress(accounts[0]);
+                    loadContractInfo(accounts[0]);
+                } else {
+                    setIsConnected(false);
+                    setUserAddress("");
+                    setTokenBalance("0");
+                }
+            });
+        }
+
+        const loadMarketplaceProperties = async (): Promise<void> => {
+            try {
+                // Charger les propriétés depuis le fichier JSON
+                const properties = loadProperties();
+
+                // Simuler un délai de chargement
                 setTimeout(() => {
-                    setProperties(mockProperties);
+                    setProperties(properties);
                     setIsLoading(false);
                 }, 1000);
-
-                /* Commentez le code réel qui appelle le contrat pour le moment
-                if (window.ethereum) {
-                    const provider = new ethers.providers.Web3Provider(window.ethereum);
-                    const contract = new ethers.Contract(
-                        contractAddress,
-                        HETIC_ABI,
-                        provider
-                    );
-
-                    // Get all properties from contract
-                    const totalProperties = await contract.getTotalProperties();
-                    const propertiesArray: Property[] = [];
-
-                    for (let i = 0; i < parseInt(totalProperties.toString()); i++) {
-                        const propertyId = await contract.propertyIds(i);
-                        const property = await contract.properties(propertyId);
-
-                        // Only add properties that are for sale
-                        if (property.isForSale) {
-                            propertiesArray.push({
-                                id: propertyId.toString(),
-                                title: property.name,
-                                description: property.description,
-                                imageUrl: property.imageUrl,
-                                price: property.price,
-                                size: property.size.toString(),
-                                location: property.location,
-                                isForSale: property.isForSale
-                            });
-                        }
-                    }
-
-                    setProperties(propertiesArray);
-                }
-                */
             } catch (err) {
                 console.error("Erreur lors du chargement des propriétés:", err);
                 setError("Impossible de charger les propriétés. Veuillez réessayer plus tard.");
@@ -131,39 +112,108 @@ export default function Marketplace() {
             }
         };
 
-        loadProperties();
+        loadMarketplaceProperties();
+
+        // Nettoyage
+        return () => {
+            if (window.ethereum) {
+                window.ethereum.removeListener('accountsChanged', () => {});
+            }
+        };
     }, []);
 
     const handleBuy = async (propertyId: string, price: ethers.BigNumber): Promise<void> => {
         try {
-            if (window.ethereum) {
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
-                const accounts = await provider.listAccounts();
+            if (!window.ethereum) {
+                alert("Veuillez installer MetaMask pour acheter des propriétés");
+                return;
+            }
 
-                if (accounts.length === 0) {
-                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            let accounts = await provider.listAccounts();
+
+            // Si aucun compte n'est connecté, demander la connexion
+            if (accounts.length === 0) {
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                accounts = await provider.listAccounts();
+            }
+
+            if (accounts.length === 0) {
+                alert("Veuillez connecter votre wallet pour acheter des propriétés");
+                return;
+            }
+
+            const userAddress = accounts[0];
+            setIsConnected(true);
+            setUserAddress(userAddress);
+
+            // Demander confirmation à l'utilisateur
+            const confirmPurchase = window.confirm(`Confirmez-vous l'achat de cette propriété pour ${ethers.utils.formatEther(price)} ${tokenSymbol}?`);
+            if (!confirmPurchase) return;
+
+            const signer = provider.getSigner();
+            const contract = new ethers.Contract(
+                contractAddress,
+                HETIC_ABI,
+                signer
+            );
+
+            // Vérifiez d'abord le solde
+            const userBalance = await contract.balanceOf(userAddress);
+            if (userBalance.lt(price)) {
+                alert(`Solde insuffisant. Vous avez ${ethers.utils.formatEther(userBalance)} ${tokenSymbol} mais la propriété coûte ${ethers.utils.formatEther(price)} ${tokenSymbol}`);
+                return;
+            }
+
+            try {
+                // Vérifier l'allowance actuelle
+                const allowance = await contract.allowance(userAddress, contractAddress);
+
+                // Si l'allowance est insuffisante, demander une approbation
+                if (allowance.lt(price)) {
+                    const approveTx = await contract.approve(contractAddress, price);
+                    await approveTx.wait();
+                    console.log("Approbation accordée");
                 }
 
-                const signer = provider.getSigner();
-                const contract = new ethers.Contract(
-                    contractAddress,
-                    HETIC_ABI,
-                    signer
-                );
+                // Effectuer la transaction de transfert des tokens
+                const tx = await contract.transfer(contractAddress, price);
+                const receipt = await tx.wait();
 
-                // Pour le développement, simulez simplement un achat réussi
-                alert(`Simulation: Vous achèteriez la propriété ${propertyId} pour ${ethers.utils.formatEther(price)} tokens HETIC`);
+                console.log("Transaction effectuée:", receipt);
 
-                /* Code réel pour plus tard
-                const transaction = await contract.buyProperty(propertyId, {
-                    value: price
-                });
+                // Stocker la propriété achetée dans le localStorage
+                const purchasedProperties = JSON.parse(localStorage.getItem('purchasedProperties') || '[]');
 
-                await transaction.wait();
-                alert("Achat réussi! La propriété est maintenant à vous.");
-                */
-            } else {
-                alert("Veuillez installer MetaMask pour acheter des propriétés");
+                // Trouver la propriété complète à partir de l'ID
+                const purchasedProperty = properties.find(prop => prop.id === propertyId);
+
+                if (purchasedProperty) {
+                    // Ajouter des informations d'achat
+                    const propertyWithPurchaseInfo = {
+                        ...purchasedProperty,
+                        purchaseDate: new Date().toISOString(),
+                        purchasePrice: ethers.utils.formatEther(price) + " " + tokenSymbol
+                    };
+
+                    // Ajouter aux propriétés achetées
+                    purchasedProperties.push(propertyWithPurchaseInfo);
+                    localStorage.setItem('purchasedProperties', JSON.stringify(purchasedProperties));
+
+                    // Mettre à jour la liste des propriétés affichées
+                    const updatedProperties = properties.map(prop =>
+                        prop.id === propertyId ? {...prop, isForSale: false} : prop
+                    );
+                    setProperties(updatedProperties);
+                }
+
+                alert(`Achat réussi! La propriété ${propertyId} est désormais à vous. Vous pouvez la retrouver dans "Mes Propriétés".`);
+
+                // Rafraîchir le solde
+                loadContractInfo(userAddress);
+            } catch (error) {
+                console.error("Erreur lors de la transaction:", error);
+                alert("La transaction a échoué. Veuillez réessayer.");
             }
         } catch (err) {
             console.error("Erreur lors de l'achat de la propriété:", err);
@@ -218,7 +268,22 @@ export default function Marketplace() {
 
             <main className="flex-grow py-8 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-4">
-                    <h1 className="text-3xl font-bold mb-8 text-center">Marketplace Immobilier</h1>
+                    <div className="flex justify-between items-center mb-8">
+                        <h1 className="text-3xl font-bold text-center">Marketplace Immobilier</h1>
+
+                        {isConnected ? (
+                            <div className="bg-blue-900 rounded-lg px-4 py-2 text-white">
+                                <p className="text-sm">Solde: {tokenBalance} {tokenSymbol}</p>
+                            </div>
+                        ) : (
+                            <button
+                                onClick={connectWallet}
+                                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+                            >
+                                Connecter Wallet
+                            </button>
+                        )}
+                    </div>
 
                     {/* Filters */}
                     <div className="bg-white p-4 rounded-lg shadow-md mb-8">
@@ -236,7 +301,7 @@ export default function Marketplace() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Prix min (HETIC)</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Prix min ({tokenSymbol})</label>
                                 <input
                                     type="number"
                                     name="minPrice"
@@ -248,7 +313,7 @@ export default function Marketplace() {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Prix max (HETIC)</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Prix max ({tokenSymbol})</label>
                                 <input
                                     type="number"
                                     name="maxPrice"
@@ -293,19 +358,31 @@ export default function Marketplace() {
                         </div>
                     ) : error ? (
                         <div className="text-center text-red-500 my-8">{error}</div>
-                    ) : filteredProperties.length > 0 ? (
+                    ) : filteredProperties.filter(property => property.isForSale).length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {filteredProperties.map((property) => (
-                                <PropertyCard
-                                    key={property.id}
-                                    property={property}
-                                    onBuy={handleBuy}
-                                />
-                            ))}
+                            {filteredProperties
+                                .filter(property => property.isForSale)
+                                .map((property) => (
+                                    <PropertyCard
+                                        key={property.id}
+                                        property={property}
+                                        onBuy={handleBuy}
+                                    />
+                                ))}
                         </div>
                     ) : (
                         <div className="text-center text-gray-500 my-12">
-                            Aucune propriété ne correspond à vos critères de recherche
+                            {filter.location || filter.minPrice || filter.maxPrice || filter.minSize || filter.maxSize ?
+                                "Aucune propriété ne correspond à vos critères de recherche" :
+                                <div>
+                                    <p>Toutes les propriétés ont été vendues!</p>
+                                    <Link href="/my-properties">
+                                        <span className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer block mt-4">
+                                            Voir mes propriétés →
+                                        </span>
+                                    </Link>
+                                </div>
+                            }
                         </div>
                     )}
                 </div>
