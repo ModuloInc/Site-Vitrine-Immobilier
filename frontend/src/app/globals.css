@@ -19,8 +19,88 @@
   }
 }
 
+@layer base {
+  :root {
+
+    /*colors*/
+    --dark-color: #000000;
+    --white-color: #ffffff;
+    --gray-o-color: #969696;
+    --gray-t-color: #EFEFEF;
+    --dark-gray-o-color: #222222;
+    --dark-gray-t-color: #333333;
+    --button-color: #f5e876;
+    --purple-color: #b78bf2;
+
+    /* Font family */
+    --font-family: 'Inter', sans-serif;
+
+    /* Font weights */
+    --font-medium: 500;
+    --font-semibold: 600;
+
+    /* Typography scales */
+    --h1-font-size: 72px;
+    --h1-line-height: 80px;
+    --h1-letter-spacing: -0.04em;
+
+    --h2-font-size: 56px;
+    --h2-line-height: 64px;
+    --h2-letter-spacing: -0.05em;
+
+    --btn-font-size: 20px;
+    --btn-line-height: 24px;
+    --btn-letter-spacing: -0.03em;
+
+    --mn-font-size: 16px;
+    --mn-line-height: 20px;
+    --mn-letter-spacing: -0.01em;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family), sans-serif;
+}
+
+/* Typography classes */
+.h1 {
+  font-family: var(--font-family), sans-serif;
+  font-weight: var(--font-semibold);
+  font-size: var(--h1-font-size);
+  line-height: var(--h1-line-height);
+  letter-spacing: var(--h1-letter-spacing);
+}
+
+.h2 {
+  font-family: var(--font-family), sans-serif;
+  font-weight: var(--font-semibold);
+  font-size: var(--h2-font-size);
+  line-height: var(--h2-line-height);
+  letter-spacing: var(--h2-letter-spacing);
+}
+
+.btn {
+  font-family: var(--font-family), sans-serif;
+  font-weight: var(--font-semibold);
+  font-size: var(--btn-font-size);
+  line-height: var(--btn-line-height);
+  letter-spacing: var(--btn-letter-spacing);
+}
+
+.mn {
+  font-family: var(--font-family), sans-serif;
+  font-weight: var(--font-medium);
+  font-size: var(--mn-font-size);
+  line-height: var(--mn-line-height);
+  letter-spacing: var(--mn-letter-spacing);
+}
+
+.logo {
+    font-family: var(--font-family), sans-serif;
+    font-weight: var(--font-semibold);
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -0.02em;
 }

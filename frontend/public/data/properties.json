@@ -1,0 +1,692 @@
+[
+  {
+    "id": "1",
+    "title": "Villa de luxe avec piscine",
+    "description": "Magnifique villa avec vue sur la mer, piscine privée et jardin luxuriant.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "10",
+    "size": "250",
+    "location": "Cannes, France",
+    "isForSale": true
+  },
+  {
+    "id": "2",
+    "title": "Appartement en centre-ville",
+    "description": "Appartement moderne avec 3 chambres, proche de toutes commodités.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "5",
+    "size": "120",
+    "location": "Paris, France",
+    "isForSale": true
+  },
+  {
+    "id": "3",
+    "title": "Maison de campagne",
+    "description": "Charmante maison avec grand terrain dans un environnement calme et verdoyant.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "7.5",
+    "size": "180",
+    "location": "Provence, France",
+    "isForSale": true
+  },
+  {
+    "id": "4",
+    "title": "Loft industriel",
+    "description": "Spacieux loft dans un ancien bâtiment industriel, entièrement rénové avec goût.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "6.2",
+    "size": "150",
+    "location": "Lyon, France",
+    "isForSale": true
+  },
+  {
+    "id": "5",
+    "title": "Chalet de montagne",
+    "description": "Authentique chalet avec vue imprenable sur les montagnes, idéal pour les amateurs de sports d'hiver.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "8.7",
+    "size": "200",
+    "location": "Chamonix, France",
+    "isForSale": true
+  },
+  {
+    "id": "6",
+    "title": "Villa contemporaine",
+    "description": "Villa d'architecte aux lignes épurées avec piscine à débordement et vue panoramique.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "12.5",
+    "size": "280",
+    "location": "Nice, France",
+    "isForSale": true
+  },
+  {
+    "id": "7",
+    "title": "Appartement haussmannien",
+    "description": "Élégant appartement avec moulures, parquet en point de Hongrie et cheminées d'époque.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "8.3",
+    "size": "160",
+    "location": "Paris, France",
+    "isForSale": true
+  },
+  {
+    "id": "8",
+    "title": "Mas provençal",
+    "description": "Authentique mas en pierre avec oliveraie, vignoble et piscine traditionnelle.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "9.8",
+    "size": "220",
+    "location": "Avignon, France",
+    "isForSale": true
+  },
+  {
+    "id": "9",
+    "title": "Duplex avec terrasse",
+    "description": "Spacieux duplex avec grande terrasse aménagée offrant une vue exceptionnelle sur la ville.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "7.2",
+    "size": "140",
+    "location": "Bordeaux, France",
+    "isForSale": true
+  },
+  {
+    "id": "10",
+    "title": "Maison basque traditionnelle",
+    "description": "Magnifique maison aux couleurs traditionnelles avec jardin fleuri et vue sur les Pyrénées.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "6.9",
+    "size": "190",
+    "location": "Biarritz, France",
+    "isForSale": true
+  },
+  {
+    "id": "11",
+    "title": "Studio rénové",
+    "description": "Petit studio entièrement rénové avec des matériaux de qualité, idéal pour investissement locatif.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "2.8",
+    "size": "35",
+    "location": "Toulouse, France",
+    "isForSale": true
+  },
+  {
+    "id": "12",
+    "title": "Penthouse de luxe",
+    "description": "Penthouse d'exception avec jacuzzi sur terrasse privative et vue à 360° sur la ville.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "14.5",
+    "size": "300",
+    "location": "Marseille, France",
+    "isForSale": true
+  },
+  {
+    "id": "13",
+    "title": "Maison de maître",
+    "description": "Élégante demeure du 19ème siècle avec dépendances, parc arboré et bassin ornementé.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "11.2",
+    "size": "350",
+    "location": "Tours, France",
+    "isForSale": true
+  },
+  {
+    "id": "14",
+    "title": "Appartement vue mer",
+    "description": "Appartement lumineux avec balcon offrant une vue imprenable sur la Méditerranée.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "6.5",
+    "size": "110",
+    "location": "Antibes, France",
+    "isForSale": true
+  },
+  {
+    "id": "15",
+    "title": "Fermette rénovée",
+    "description": "Ancienne fermette entièrement rénovée avec grange aménageable et terrain de 5000m².",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "5.8",
+    "size": "160",
+    "location": "Normandie, France",
+    "isForSale": true
+  },
+  {
+    "id": "16",
+    "title": "Appartement bourgeois",
+    "description": "Bel appartement dans immeuble de caractère avec hauteur sous plafond et prestations haut de gamme.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "7.8",
+    "size": "145",
+    "location": "Lyon, France",
+    "isForSale": true
+  },
+  {
+    "id": "17",
+    "title": "Villa pieds dans l'eau",
+    "description": "Villa exceptionnelle avec accès direct à la plage, jardin tropical et pool house.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "15.9",
+    "size": "320",
+    "location": "Saint-Tropez, France",
+    "isForSale": true
+  },
+  {
+    "id": "18",
+    "title": "Longère bretonne",
+    "description": "Authentique longère en pierre avec four à pain, puits et jardin paysager.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "4.2",
+    "size": "170",
+    "location": "Bretagne, France",
+    "isForSale": true
+  },
+  {
+    "id": "19",
+    "title": "Loft avec verrière",
+    "description": "Ancien atelier transformé en loft avec verrière d'artiste et hauteur sous plafond exceptionnelle.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "8.4",
+    "size": "200",
+    "location": "Paris, France",
+    "isForSale": true
+  },
+  {
+    "id": "20",
+    "title": "Maison d'architecte écologique",
+    "description": "Maison contemporaine à énergie positive avec matériaux écologiques et domotique intégrée.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "9.6",
+    "size": "210",
+    "location": "Montpellier, France",
+    "isForSale": true
+  },
+  {
+    "id": "21",
+    "title": "Château avec dépendances",
+    "description": "Magnifique château du 18ème siècle avec chapelle, écuries et parc de 10 hectares.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "22.5",
+    "size": "800",
+    "location": "Loire, France",
+    "isForSale": true
+  },
+  {
+    "id": "22",
+    "title": "T2 centre historique",
+    "description": "Charmant T2 dans le centre historique avec poutres apparentes et pierres anciennes.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "3.2",
+    "size": "55",
+    "location": "Strasbourg, France",
+    "isForSale": true
+  },
+  {
+    "id": "23",
+    "title": "Bastide provençale",
+    "description": "Superbe bastide avec fontaine, roseraie et oliviers centenaires dans un domaine clôturé.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "13.7",
+    "size": "280",
+    "location": "Aix-en-Provence, France",
+    "isForSale": true
+  },
+  {
+    "id": "24",
+    "title": "Maison à colombages",
+    "description": "Maison typique à colombages parfaitement restaurée avec jardin médiéval.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "5.4",
+    "size": "140",
+    "location": "Alsace, France",
+    "isForSale": true
+  },
+  {
+    "id": "25",
+    "title": "Appartement terrasse",
+    "description": "Appartement de standing avec grande terrasse aménagée et vue dégagée sur le parc.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "6.7",
+    "size": "130",
+    "location": "Nantes, France",
+    "isForSale": true
+  },
+  {
+    "id": "26",
+    "title": "Villa californienne",
+    "description": "Villa d'inspiration californienne avec patio, palmiers et espace lounge extérieur.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "11.9",
+    "size": "260",
+    "location": "Biarritz, France",
+    "isForSale": true
+  },
+  {
+    "id": "27",
+    "title": "Triplex moderne",
+    "description": "Triplex contemporain avec ascenseur privatif et toit-terrasse équipé d'un jacuzzi.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "9.3",
+    "size": "185",
+    "location": "Lille, France",
+    "isForSale": true
+  },
+  {
+    "id": "28",
+    "title": "Domaine viticole",
+    "description": "Propriété viticole avec chai, cuverie moderne et 15 hectares de vignes en AOC.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "18.5",
+    "size": "420",
+    "location": "Bordeaux, France",
+    "isForSale": true
+  },
+  {
+    "id": "29",
+    "title": "Pavillon de banlieue",
+    "description": "Pavillon familial avec garage double, jardin arboré et piscine hors-sol.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "4.8",
+    "size": "130",
+    "location": "Rennes, France",
+    "isForSale": true
+  },
+  {
+    "id": "30",
+    "title": "Maison de pêcheur",
+    "description": "Authentique maison de pêcheur rénovée avec ponton privé et vue sur le port.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "5.9",
+    "size": "95",
+    "location": "Bretagne, France",
+    "isForSale": true
+  },
+  {
+    "id": "31",
+    "title": "Appartement Belle Époque",
+    "description": "Somptueux appartement Belle Époque avec fresques murales et bow-window.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "7.6",
+    "size": "175",
+    "location": "Nice, France",
+    "isForSale": true
+  },
+  {
+    "id": "32",
+    "title": "Ferme fortifiée",
+    "description": "Imposante ferme fortifiée du 16ème siècle avec tour de guet et douves.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "8.9",
+    "size": "310",
+    "location": "Dordogne, France",
+    "isForSale": true
+  },
+  {
+    "id": "33",
+    "title": "Résidence secondaire",
+    "description": "Charmante maison de vacances avec piscine chauffée et pool house équipé.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "6.3",
+    "size": "150",
+    "location": "Var, France",
+    "isForSale": true
+  },
+  {
+    "id": "34",
+    "title": "Penthouse panoramique",
+    "description": "Spectaculaire penthouse avec terrasses sur trois côtés et vue imprenable sur la ville.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "12.8",
+    "size": "270",
+    "location": "Lyon, France",
+    "isForSale": true
+  },
+  {
+    "id": "35",
+    "title": "Moulin à eau",
+    "description": "Ancien moulin à eau avec mécanisme d'origine, bief privé et terrain de 2 hectares.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "7.1",
+    "size": "240",
+    "location": "Périgord, France",
+    "isForSale": true
+  },
+  {
+    "id": "36",
+    "title": "Studio étudiant",
+    "description": "Studio fonctionnel proche des universités, idéal pour investissement locatif étudiant.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "1.9",
+    "size": "25",
+    "location": "Grenoble, France",
+    "isForSale": true
+  },
+  {
+    "id": "37",
+    "title": "Demeure historique",
+    "description": "Prestigieuse demeure classée avec éléments d'architecture Renaissance et jardin à la française.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "16.4",
+    "size": "450",
+    "location": "Val de Loire, France",
+    "isForSale": true
+  },
+  {
+    "id": "38",
+    "title": "Maison d'artiste",
+    "description": "Ancien atelier d'artiste reconverti en habitation avec verrière zénithale et mezzanine.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "8.1",
+    "size": "180",
+    "location": "Paris, France",
+    "isForSale": true
+  },
+  {
+    "id": "39",
+    "title": "Villa méditerranéenne",
+    "description": "Villa de style méditerranéen avec patio intérieur, fontaine et terrasses en pierre.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "9.4",
+    "size": "230",
+    "location": "Côte d'Azur, France",
+    "isForSale": true
+  },
+  {
+    "id": "40",
+    "title": "Manoir campagnard",
+    "description": "Élégant manoir de campagne avec orangerie, étang et allées cavalières.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "13.2",
+    "size": "380",
+    "location": "Normandie, France",
+    "isForSale": true
+  },
+  {
+    "id": "41",
+    "title": "Appartement duplex",
+    "description": "Spacieux duplex avec mezzanine, double hauteur sous plafond et balcon filant.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "6.8",
+    "size": "155",
+    "location": "Toulouse, France",
+    "isForSale": true
+  },
+  {
+    "id": "42",
+    "title": "Maison troglodyte",
+    "description": "Habitation troglodytique rénovée avec confort moderne et caves voutées.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "4.3",
+    "size": "120",
+    "location": "Touraine, France",
+    "isForSale": true
+  },
+  {
+    "id": "43",
+    "title": "Villa Art Déco",
+    "description": "Somptueuse villa Art Déco avec vitraux, ferronneries d'art et jardin géométrique.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "9.7",
+    "size": "240",
+    "location": "Côte d'Azur, France",
+    "isForSale": true
+  },
+  {
+    "id": "44",
+    "title": "T3 avec balcon",
+    "description": "Appartement T3 traversant avec balcon donnant sur un square arboré.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "4.5",
+    "size": "75",
+    "location": "Nantes, France",
+    "isForSale": true
+  },
+  {
+    "id": "45",
+    "title": "Villa d'architecte",
+    "description": "Villa signée par un architecte renommé avec matériaux nobles et lignes épurées.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "14.8",
+    "size": "290",
+    "location": "Cap Ferret, France",
+    "isForSale": true
+  },
+  {
+    "id": "46",
+    "title": "Propriété équestre",
+    "description": "Domaine équestre avec manège couvert, écuries professionnelles et paddocks.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "11.5",
+    "size": "320",
+    "location": "Sologne, France",
+    "isForSale": true
+  },
+  {
+    "id": "47",
+    "title": "Studio vue mer",
+    "description": "Charmant studio avec vue mer panoramique, entièrement rénové et meublé.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "3.6",
+    "size": "30",
+    "location": "Biarritz, France",
+    "isForSale": true
+  },
+  {
+    "id": "48",
+    "title": "Maison bourgeoise",
+    "description": "Imposante maison bourgeoise avec tourelle, véranda et jardin clos de murs.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "8.5",
+    "size": "260",
+    "location": "Orléans, France",
+    "isForSale": true
+  },
+  {
+    "id": "49",
+    "title": "T4 traversant",
+    "description": "Bel appartement familial traversant avec double séjour et loggia.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "5.6",
+    "size": "110",
+    "location": "Marseille, France",
+    "isForSale": true
+  },
+  {
+    "id": "50",
+    "title": "Chalet alpin",
+    "description": "Authentique chalet alpin avec charpente traditionnelle, sauna et vue sur les pistes.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "10.4",
+    "size": "220",
+    "location": "Alpes, France",
+    "isForSale": true
+  },
+  {
+    "id": "51",
+    "title": "Maison néoprovençale",
+    "description": "Belle maison néoprovençale avec piscine à forme libre et pool house équipé.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "8.2",
+    "size": "190",
+    "location": "Var, France",
+    "isForSale": true
+  },
+  {
+    "id": "52",
+    "title": "Appartement de standing",
+    "description": "Appartement haut de gamme dans résidence sécurisée avec parc privatif et piscine.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "7.4",
+    "size": "135",
+    "location": "Montpellier, France",
+    "isForSale": true
+  },
+  {
+    "id": "53",
+    "title": "Maison contemporaine",
+    "description": "Maison contemporaine aux lignes épurées avec baies vitrées et piscine intérieure.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "12.3",
+    "size": "220",
+    "location": "Toulouse, France",
+    "isForSale": true
+  },
+  {
+    "id": "54",
+    "title": "Propriété viticole",
+    "description": "Domaine viticole avec maison de maître, chai de vinification et 8 hectares de vignes.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "15.2",
+    "size": "380",
+    "location": "Beaujolais, France",
+    "isForSale": true
+  },
+  {
+    "id": "55",
+    "title": "Studio parisien",
+    "description": "Charmant studio dans le quartier du Marais avec parquet et moulures d'époque.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "4.1",
+    "size": "28",
+    "location": "Paris, France",
+    "isForSale": true
+  },
+  {
+    "id": "56",
+    "title": "Domaine pastoral",
+    "description": "Ancienne ferme pastorale avec bergerie, four à pain et 15 hectares de prairies.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "6.9",
+    "size": "210",
+    "location": "Auvergne, France",
+    "isForSale": true
+  },
+  {
+    "id": "57",
+    "title": "Maison d'architecte contemporaine",
+    "description": "Maison d'architecte avec murs en béton brut, toiture végétalisée et domotique avancée.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "13.5",
+    "size": "250",
+    "location": "Bordeaux, France",
+    "isForSale": true
+  },
+  {
+    "id": "58",
+    "title": "Pavillon de banlieue",
+    "description": "Pavillon traditionnel avec sous-sol aménagé, garage et jardin arboré.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "4.7",
+    "size": "120",
+    "location": "Lille, France",
+    "isForSale": true
+  },
+  {
+    "id": "59",
+    "title": "Bastide provençale",
+    "description": "Authentique bastide provençale avec restanques, oliveraie et piscine à débordement.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "11.8",
+    "size": "280",
+    "location": "Lubéron, France",
+    "isForSale": true
+  },
+  {
+    "id": "60",
+    "title": "Duplex avec jardin",
+    "description": "Appartement en duplex avec jardin privatif et entrée indépendante.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "5.3",
+    "size": "95",
+    "location": "Lyon, France",
+    "isForSale": true
+  },
+  {
+    "id": "61",
+    "title": "Château classé",
+    "description": "Château classé Monument Historique avec douves, chapelle et parc de 20 hectares.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "28.5",
+    "size": "850",
+    "location": "Bourgogne, France",
+    "isForSale": true
+  },
+  {
+    "id": "62",
+    "title": "Appartement vue cathédrale",
+    "description": "Bel appartement avec vue imprenable sur la cathédrale et terrasse privative.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "6.4",
+    "size": "125",
+    "location": "Strasbourg, France",
+    "isForSale": true
+  },
+  {
+    "id": "63",
+    "title": "Maison en pierre",
+    "description": "Ancienne maison en pierre entièrement restaurée avec four à pain et puits.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "5.7",
+    "size": "160",
+    "location": "Périgord, France",
+    "isForSale": true
+  },
+  {
+    "id": "64",
+    "title": "Loft urbain",
+    "description": "Spacieux loft avec verrière industrielle et terrasse sur les toits.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "9.5",
+    "size": "190",
+    "location": "Marseille, France",
+    "isForSale": true
+  },
+  {
+    "id": "65",
+    "title": "Villa Art Nouveau",
+    "description": "Majestueuse villa Art Nouveau avec vitraux, céramiques et jardin d'hiver.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "15.7",
+    "size": "310",
+    "location": "Nancy, France",
+    "isForSale": true
+  },
+  {
+    "id": "66",
+    "title": "Maison forestière",
+    "description": "Ancienne maison forestière rénovée avec terrasse en bois et vue panoramique.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "4.9",
+    "size": "140",
+    "location": "Vosges, France",
+    "isForSale": true
+  },
+  {
+    "id": "67",
+    "title": "T5 familial",
+    "description": "Grand appartement familial avec double séjour, balcon et cave.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "6.1",
+    "size": "130",
+    "location": "Grenoble, France",
+    "isForSale": true
+  },
+  {
+    "id": "68",
+    "title": "Manoir breton",
+    "description": "Authentique manoir breton avec tourelle, parc arboré et dépendances en pierre.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "9.9",
+    "size": "320",
+    "location": "Bretagne, France",
+    "isForSale": true
+  },
+  {
+    "id": "69",
+    "title": "Appart-hôtel",
+    "description": "Appartement dans résidence hôtelière avec services et rendement locatif attractif.",
+    "imageUrl": "https://via.placeholder.com/400x300",
+    "price": "3.9",
+    "size": "45",
+    "location": "Annecy, France",
+    "isForSale": true
+  }
+]
