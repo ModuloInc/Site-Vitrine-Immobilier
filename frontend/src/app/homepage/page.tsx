@@ -1,12 +1,12 @@
 "use client"
 
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { ethers } from 'ethers';
+import {ethers} from 'ethers';
 import Navbar from "@/app/component/Navbar";
 import Footer from "@/app/component/Footer";
-import { HETIC_ABI} from "@/app/abi/hetic";
+import {HETIC_ABI} from "@/app/abi/hetic";
 
 export default function HomePage() {
     const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
@@ -61,7 +61,7 @@ export default function HomePage() {
     const connectWallet = async () => {
         try {
             if (window.ethereum) {
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
                 setIsConnected(true);
                 setUserAddress(accounts[0]);
 
@@ -167,7 +167,7 @@ export default function HomePage() {
     useEffect(() => {
         // Vérifier si le wallet est déjà connecté
         if (window.ethereum) {
-            window.ethereum.request({ method: 'eth_accounts' })
+            window.ethereum.request({method: 'eth_accounts'})
                 .then((accounts: any) => {
                     if (accounts.length > 0) {
                         setIsConnected(true);
@@ -199,7 +199,8 @@ export default function HomePage() {
         // Nettoyage
         return () => {
             if (window.ethereum) {
-                window.ethereum.removeListener('accountsChanged', () => {});
+                window.ethereum.removeListener('accountsChanged', () => {
+                });
             }
         };
     }, []);
@@ -208,27 +209,30 @@ export default function HomePage() {
         <div className="flex flex-col min-h-screen">
             <Head>
                 <title>ImmoChain - Achat de biens immobiliers avec {tokenSymbol}</title>
-                <meta name="description" content="Plateforme d'achat et de vente de biens immobiliers utilisant la technologie blockchain" />
-                <link rel="icon" href="/public/favicon.ico" />
+                <meta name="description"
+                      content="Plateforme d'achat et de vente de biens immobiliers utilisant la technologie blockchain"/>
+                <link rel="icon" href="/public/favicon.ico"/>
             </Head>
 
-            <Navbar />
+            <Navbar/>
 
             <main className="flex-grow">
                 {/* Hero Section */}
-                <section className="bg-gradient-to-r from-blue-500 to-blue-700 text-white">
-                    <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24">
+                <section className="bg-[var(--dark-color)] text-white">
+                    <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 flex">
                         <div className="text-center">
                             <h1 className="text-4xl font-extrabold sm:text-5xl md:text-6xl">
                                 <span className="block">Révolutionnez votre</span>
                                 <span className="block">Expérience Immobilière</span>
                             </h1>
-                            <p className="mt-4 text-xl max-w-md mx-auto">
-                                Achetez et vendez des biens immobiliers en toute sécurité avec {tokenSymbol || "HETIC"} sur la blockchain.
+                            <p className="mt-4 text-xl max-w-md mx-auto text-[var(--gray-o-color)]">
+                                Achetez et vendez des biens immobiliers en toute sécurité
+                                avec {tokenSymbol || "HETIC"} sur la blockchain.
                             </p>
                             <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-4">
                                 <Link href="/marketplace">
-                  <span className="bg-white text-blue-600 hover:bg-gray-100 font-bold py-3 px-6 rounded-lg shadow-lg cursor-pointer">
+                  <span
+                      className="bg-white text-black hover:bg-gray-100 font-bold py-3 px-6 rounded-lg shadow-lg cursor-pointer">
                     Explorer le Marketplace
                   </span>
                                 </Link>
@@ -247,6 +251,7 @@ export default function HomePage() {
                                 )}
                             </div>
                         </div>
+                        <div></div>
                     </div>
                 </section>
 
@@ -276,7 +281,8 @@ export default function HomePage() {
                                     </button>
                                 </div>
                                 <p className="text-sm text-gray-500 mt-3">
-                                    Note: Cette fonction est disponible uniquement pour les tests. En production, les tokens seraient distribués par d'autres mécanismes.
+                                    Note: Cette fonction est disponible uniquement pour les tests. En production, les
+                                    tokens seraient distribués par d'autres mécanismes.
                                 </p>
                             </div>
                         </div>
@@ -297,7 +303,8 @@ export default function HomePage() {
                         ) : featuredProperties.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {featuredProperties.map((property) => (
-                                    <div key={property.id} className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                                    <div key={property.id}
+                                         className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
                                         <div className="relative">
                                             <img
                                                 src={property.imageUrl}
@@ -305,7 +312,8 @@ export default function HomePage() {
                                                 className="h-48 w-full object-cover"
                                             />
                                             {property.isForSale && (
-                                                <span className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 text-xs rounded-full">
+                                                <span
+                                                    className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 text-xs rounded-full">
                           À Vendre
                         </span>
                                             )}
@@ -314,7 +322,8 @@ export default function HomePage() {
                                             <h3 className="text-lg font-semibold text-gray-800 mb-1">{property.title}</h3>
                                             <p className="text-gray-600 text-sm mb-2">{property.location}</p>
                                             <div className="flex justify-between items-center mb-3">
-                                                <span className="font-bold text-blue-600">{ethers.utils.formatEther(property.price)} {tokenSymbol || "HETIC"}</span>
+                                                <span
+                                                    className="font-bold text-blue-600">{ethers.utils.formatEther(property.price)} {tokenSymbol || "HETIC"}</span>
                                                 <div className="flex items-center">
                                                     <span className="text-sm text-gray-600">{property.size} m²</span>
                                                 </div>
@@ -351,7 +360,8 @@ export default function HomePage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <div className="text-center">
-                                <div className="bg-blue-100 rounded-full h-16 w-16 flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-4">
+                                <div
+                                    className="bg-blue-100 rounded-full h-16 w-16 flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-4">
                                     1
                                 </div>
                                 <h3 className="text-xl font-semibold mb-2">Connectez votre Wallet</h3>
@@ -361,7 +371,8 @@ export default function HomePage() {
                             </div>
 
                             <div className="text-center">
-                                <div className="bg-blue-100 rounded-full h-16 w-16 flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-4">
+                                <div
+                                    className="bg-blue-100 rounded-full h-16 w-16 flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-4">
                                     2
                                 </div>
                                 <h3 className="text-xl font-semibold mb-2">Explorez les Propriétés</h3>
@@ -371,12 +382,14 @@ export default function HomePage() {
                             </div>
 
                             <div className="text-center">
-                                <div className="bg-blue-100 rounded-full h-16 w-16 flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-4">
+                                <div
+                                    className="bg-blue-100 rounded-full h-16 w-16 flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-4">
                                     3
                                 </div>
                                 <h3 className="text-xl font-semibold mb-2">Achetez en Toute Sécurité</h3>
                                 <p className="text-gray-600">
-                                    Achetez des propriétés avec des {tokenSymbol || "HETIC"}, sécurisées par des contrats intelligents.
+                                    Achetez des propriétés avec des {tokenSymbol || "HETIC"}, sécurisées par des
+                                    contrats intelligents.
                                 </p>
                             </div>
                         </div>
@@ -384,7 +397,7 @@ export default function HomePage() {
                 </section>
             </main>
 
-            <Footer />
+            <Footer/>
         </div>
     );
 }
