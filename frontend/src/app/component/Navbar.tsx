@@ -2,6 +2,7 @@
 import {useState, useEffect} from 'react';
 import Link from 'next/link';
 import {ethers} from 'ethers';
+import {ConnectButton} from "@rainbow-me/rainbowkit";
 
 const Navbar: React.FC = () => {
     const [account, setAccount] = useState<string>('');
@@ -27,6 +28,13 @@ const Navbar: React.FC = () => {
         } catch (error) {
             console.error("Erreur lors de la connexion au wallet:", error);
         }
+    };
+
+    const disconnectWallet = (): void => {
+        setAccount('');
+        setBalance('');
+        setIsConnected(false);
+        window.location.reload();
     };
 
     useEffect(() => {
@@ -85,11 +93,7 @@ const Navbar: React.FC = () => {
                     </div>
                     <div className="flex items-center">
                         {isConnected ? (
-                            <div className="flex items-center bg-[var(--button-color)] rounded-lg px-4 py-2 text-[var(--dark-color)]">
-                                <span className="text-sm mr-2">{balance} ETH</span>
-                                <span
-                                    className="text-xs">{`${account.substring(0, 6)}...${account.substring(account.length - 4)}`}</span>
-                            </div>
+                            <ConnectButton/>
                         ) : (
                             <button
                                 onClick={connectWallet}

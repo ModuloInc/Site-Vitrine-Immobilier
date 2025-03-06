@@ -17,7 +17,7 @@
     "price": "5",
     "size": "120",
     "location": "Paris, France",
-    "isForSale": true
+    "isForSale": false
   },
   {
     "id": "3",
