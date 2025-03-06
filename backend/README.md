@@ -23,7 +23,7 @@ npx hardhat node
 
 Déployer un smart contract spécifique sur la blockchain locale (après avoir lancé la blockchain locale)
 ```shell
-npx hardhat ignition deploy ./ignition/modules/Hetic.ts --network localhost
+npx hardhat ignition deploy ./ignition/modules/ModuloCoin.ts --network localhost
 ```
 
 Compiler les smarts contracts pour avoir l’ABI
