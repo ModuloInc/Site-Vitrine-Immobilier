@@ -257,7 +257,7 @@ export default function HomePage() {
 
                 {/* Mint Tokens Section (visible seulement si connecté) */}
                 {isConnected && (
-                    <section className="py-8 bg-gray-100">
+                    <section className="py-8 bg-[var(--dark-color)]">
                         <div className="max-w-xl mx-auto px-4">
                             <div className="bg-white p-6 rounded-lg shadow-md">
                                 <h2 className="text-xl font-bold mb-4">Obtenir des {tokenSymbol || "HETIC"} Tokens</h2>
