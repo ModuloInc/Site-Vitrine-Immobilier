@@ -129,6 +129,8 @@ export default function Marketplace() {
                         </div>
                     </div>
 
+                    <span>test</span>
+
                     {/* Chargement des propriétés */}
                     {isLoading ? (
                         <p className="text-center text-gray-500">Chargement des propriétés...</p>
