@@ -4,11 +4,11 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
 // Ce module utilise Hardhat Ignition pour gérer le déploiement du smart contrat Hetic.
-const heticModule = buildModule("heticModule", (m) => {
+const ModuloCoinModule = buildModule("ModuloCoinModule", (m) => {
   // Déploiement du smart contrat Hetic
-  const hetic = m.contract("Hetic");
+  const ModuloCoin = m.contract("ModuloCoin");
 
-  return { hetic };
+  return { ModuloCoin };
 });
 
-export default heticModule;
+export default ModuloCoinModule;
