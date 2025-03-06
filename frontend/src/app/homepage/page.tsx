@@ -221,7 +221,7 @@ export default function HomePage() {
                 {/* Hero Section */}
                 <section className="bg-[var(--dark-color)] text-white">
                     <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 flex">
-                        <div className="text-center">
+                        <div className="text-center content-center">
                             <h1 className="text-4xl font-extrabold sm:text-5xl md:text-6xl">
                                 <span className="block">Révolutionnez votre</span>
                                 <span className="block">Expérience Immobilière</span>
