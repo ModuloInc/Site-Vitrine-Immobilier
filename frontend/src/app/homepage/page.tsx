@@ -8,7 +8,8 @@ import Navbar from "@/app/component/Navbar";
 import Footer from "@/app/component/Footer";
 import {HETIC_ABI} from "@/app/abi/hetic";
 import Scene from "@/app/component/CoinView";
-import { loadProperties } from '@/app/utils/propertyUtils';
+import {loadProperties} from '@/app/utils/propertyUtils';
+import CustomCursor from "@/app/component/CustomCursor";
 
 export default function HomePage() {
     const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
@@ -81,6 +82,9 @@ export default function HomePage() {
                 loadContractInfo(userAddress);
 
                 alert(`${mintAmount} ${tokenSymbol} ont été mintés avec succès!`);
+
+                setMintAmount("");
+
             }
         } catch (error) {
             console.error("Erreur lors du mint des tokens:", error);
@@ -228,12 +232,14 @@ export default function HomePage() {
                 <link rel="icon" href="/public/favicon.ico"/>
             </Head>
 
+            <CustomCursor />
+
             <Navbar/>
 
             <main className="flex-grow">
                 {/* Hero Section */}
-                <section className="bg-[var(--dark-color)] text-white">
-                    <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 flex">
+                <section className="bg-[var(--dark-color)] text-white ">
+                    <div className="max-w-7xl mx-auto px-4 py-16 sm:py-24 flex gap-8">
                         <div className="text-center content-center">
                             <h1 className="text-4xl font-extrabold sm:text-5xl md:text-6xl">
                                 <span className="block">Révolutionnez votre</span>
@@ -241,7 +247,7 @@ export default function HomePage() {
                             </h1>
                             <p className="mt-4 text-xl max-w-md mx-auto text-[var(--gray-o-color)]">
                                 Achetez et vendez des biens immobiliers en toute sécurité
-                                avec {tokenSymbol || "HETIC"} sur la blockchain.
+                                avec {tokenSymbol || "ModuloCoin"} sur la blockchain.
                             </p>
                             <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-4">
                                 <Link href="/marketplace">
@@ -266,8 +272,7 @@ export default function HomePage() {
                             </div>
                         </div>
                         <div>
-                            {/*<img src="bitcoin.svg" alt="Illustration" className="hidden md:block w-96"/>*/}
-                            <Scene />
+                            <Scene/>
                         </div>
                     </div>
                 </section>
@@ -276,13 +281,13 @@ export default function HomePage() {
                     <section className="py-8 bg-[var(--dark-color)]">
                         <div className="max-w-xl mx-auto px-4">
                             <div className="bg-white p-6 rounded-lg shadow-md">
-                                <h2 className="text-xl font-bold mb-4">Obtenir des {tokenSymbol || "HETIC"} Tokens</h2>
+                                <h2 className="text-xl font-bold mb-4 text-[var(--dark-color)]">Obtenir des {tokenSymbol || "ModuloCoin"}</h2>
                                 <div className="flex flex-col sm:flex-row items-center gap-3">
                                     <input
                                         type="number"
                                         value={mintAmount}
                                         onChange={(e) => setMintAmount(e.target.value)}
-                                        className="flex-1 p-2 border border-gray-300 rounded-md w-full sm:w-auto"
+                                        className="flex-1 p-2 border border-gray-300 rounded-md w-full sm:w-auto text-[var(--dark-color)]"
                                         placeholder="Montant"
                                         min="1"
                                     />
@@ -293,7 +298,7 @@ export default function HomePage() {
                                             ? 'bg-gray-400 cursor-not-allowed'
                                             : 'bg-green-600 hover:bg-green-700'} text-white`}
                                     >
-                                        {isMinting ? 'En cours...' : `Mint ${tokenSymbol || "HETIC"}`}
+                                        {isMinting ? 'En cours...' : `Buy ${tokenSymbol || "ModuloCoin"}`}
                                     </button>
                                 </div>
                                 <p className="text-sm text-gray-500 mt-3">
@@ -327,27 +332,34 @@ export default function HomePage() {
                                                 alt={property.title}
                                                 className="h-48 w-full object-cover"
                                             />
-                                            {property.isForSale && (
+                                            {property.isForSale ? (
                                                 <span
                                                     className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 text-xs rounded-full">
-                          À Vendre
-                        </span>
+                                                    À Vendre
+                                                </span>
+                                            ) : (
+                                                <span
+                                                    className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 text-xs rounded-full">
+                                                    Vendu
+                                                </span>
                                             )}
                                         </div>
                                         <div className="p-4">
-                                            <h3 className={`text-lg font-semibold ${ index % 2 === 0 ? 'text-[var(--white-color)]' : 'text-[var(--dark-gray-t-color)]'} mb-1`}>{property.title}</h3>
+                                            <h3 className={`text-lg font-semibold ${index % 2 === 0 ? 'text-[var(--white-color)]' : 'text-[var(--dark-gray-t-color)]'} mb-1`}>{property.title}</h3>
                                             <p className={`mn ${index % 2 === 0 ? 'text-[var(--gray-t-color)]' : 'text-[var(--dark-gray-t-color)]'} mb-2`}>{property.location}</p>
                                             <div className="flex justify-between items-center mb-3">
                                                 <span
                                                     className="font-bold text-blue-600">{ethers.utils.formatEther(property.price)} {tokenSymbol || "HETIC"}</span>
                                                 <div className="flex items-center">
-                                                    <span className="text-sm text-[var(--purple-color)]">{property.size} m²</span>
+                                                    <span
+                                                        className="text-sm text-[var(--purple-color)]">{property.size} m²</span>
                                                 </div>
                                             </div>
                                             <p className={`${index % 2 === 0 ? 'text-[var(--gray-t-color)]' : 'text-[var(--dark-gray-o-color)]'} mb-3 line-clamp-2`}>{property.description}</p>
                                             <button
                                                 onClick={() => handleBuy(property.id, property.price)}
-                                                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+                                                className={`w-full ${property.isForSale ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'} text-white font-semibold py-2 px-4 rounded-lg transition-colors`}
+                                                disabled={!isConnected || !property.isForSale}
                                             >
                                                 Acheter
                                             </button>
@@ -359,7 +371,8 @@ export default function HomePage() {
                             <div className="text-center text-gray-500">
                                 <p>Toutes les propriétés ont été vendues!</p>
                                 <Link href="/my-properties">
-                                    <span className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer block mt-4">
+                                    <span
+                                        className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer block mt-4">
                                         Voir mes propriétés →
                                     </span>
                                 </Link>
@@ -379,7 +392,8 @@ export default function HomePage() {
                 {/* How It Works Section */}
                 <section className="bg-[var(--dark-gray-o-color)] py-12">
                     <div className="max-w-7xl mx-auto px-4">
-                        <h2 className="text-[var(--white-color)] text-3xl font-bold text-center mb-12">Comment ça marche</h2>
+                        <h2 className="text-[var(--white-color)] text-3xl font-bold text-center mb-12">Comment ça
+                            marche</h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <div className="text-center">
@@ -387,7 +401,8 @@ export default function HomePage() {
                                     className="bg-blue-100 rounded-full h-16 w-16 flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-4">
                                     1
                                 </div>
-                                <h3 className="text-[var(--white-color)] text-xl font-semibold mb-2">Connectez votre Wallet</h3>
+                                <h3 className="text-[var(--white-color)] text-xl font-semibold mb-2">Connectez votre
+                                    Wallet</h3>
                                 <p className="text-[var(--gray-t-color)]">
                                     Utilisez MetaMask pour vous connecter à notre plateforme de manière sécurisée.
                                 </p>
@@ -398,7 +413,8 @@ export default function HomePage() {
                                     className="bg-blue-100 rounded-full h-16 w-16 flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-4">
                                     2
                                 </div>
-                                <h3 className="text-[var(--white-color)] text-xl font-semibold mb-2">Explorez les Propriétés</h3>
+                                <h3 className="text-[var(--white-color)] text-xl font-semibold mb-2">Explorez les
+                                    Propriétés</h3>
                                 <p className="text-[var(--gray-t-color)]">
                                     Parcourez notre marketplace pour trouver le bien immobilier de vos rêves.
                                 </p>
@@ -409,7 +425,8 @@ export default function HomePage() {
                                     className="bg-blue-100 rounded-full h-16 w-16 flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-4">
                                     3
                                 </div>
-                                <h3 className="text-[var(--white-color)] text-xl font-semibold mb-2">Achetez en Toute Sécurité</h3>
+                                <h3 className="text-[var(--white-color)] text-xl font-semibold mb-2">Achetez en Toute
+                                    Sécurité</h3>
                                 <p className="text-[var(--gray-t-color)]">
                                     Achetez des propriétés avec des {tokenSymbol || "HETIC"}, sécurisées par des
                                     contrats intelligents.

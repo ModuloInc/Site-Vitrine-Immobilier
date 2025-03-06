@@ -8,8 +8,8 @@ export function BitcoinCoin() {
     const meshRef = useRef<THREE.Mesh>(null);
 
     // Load bitcoin textures
-    const texture = useTexture("bitcoin.jpeg");
-    const bumpMap = useTexture("bitcoin.jpeg");
+    const texture = useTexture("moduloCoin.jpg");
+    const bumpMap = useTexture("moduloCoin.jpg");
 
     // Rotate the texture by 90 degrees
     texture.rotation = Math.PI / 2;
