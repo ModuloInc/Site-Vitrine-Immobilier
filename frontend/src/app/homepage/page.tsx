@@ -318,7 +318,7 @@ export default function HomePage() {
                             <div className="text-center text-red-500">{error}</div>
                         ) : featuredProperties.filter(property => property.isForSale).length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {featuredProperties.map((property, index) => (
+                                {featuredProperties.slice(0, 3).map((property, index) => (
                                     <div key={property.id}
                                          className={`${index % 2 === 0 ? 'bg-[var(--dark-gray-o-color)]' : 'bg-[var(--white-color)]'} rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105`}>
                                         <div className="relative">
