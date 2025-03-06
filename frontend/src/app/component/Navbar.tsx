@@ -57,13 +57,13 @@ const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <Link href="/public">
+              <Link href="/homepage">
               <span className="flex-shrink-0 flex items-center cursor-pointer">
                 <h1 className="text-white font-bold text-xl">ImmoChain</h1>
               </span>
               </Link>
               <div className="hidden md:ml-6 md:flex md:space-x-4">
-                <Link href="/public">
+                <Link href="/homepage">
                 <span className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer">
                   Accueil
                 </span>
@@ -73,10 +73,10 @@ const Navbar: React.FC = () => {
                   Marketplace
                 </span>
                 </Link>
-                <Link href="/mes-proprietes">
-                <span className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer">
-                  Mes Propriétés
-                </span>
+                <Link href="/my-properties">
+                    <span className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer">
+                      Mes Propriétés
+                    </span>
                 </Link>
               </div>
             </div>
