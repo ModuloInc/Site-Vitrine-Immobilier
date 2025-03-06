@@ -29,7 +29,7 @@ export default function HomePage() {
             id: "1",
             title: "Villa de luxe avec piscine",
             description: "Magnifique villa avec vue sur la mer, piscine privée et jardin luxuriant.",
-            imageUrl: "https://via.placeholder.com/400x300",
+            imageUrl: "https://picsum.photos/id/193/400/300",
             price: ethers.utils.parseEther("10"),
             size: "250",
             location: "Cannes, France",
@@ -39,7 +39,7 @@ export default function HomePage() {
             id: "2",
             title: "Appartement en centre-ville",
             description: "Appartement moderne avec 3 chambres, proche de toutes commodités.",
-            imageUrl: "https://via.placeholder.com/400x300",
+            imageUrl: "https://picsum.photos/id/193/400/300",
             price: ethers.utils.parseEther("5"),
             size: "120",
             location: "Paris, France",
@@ -49,7 +49,7 @@ export default function HomePage() {
             id: "3",
             title: "Maison de campagne",
             description: "Charmante maison avec grand terrain dans un environnement calme et verdoyant.",
-            imageUrl: "https://via.placeholder.com/400x300",
+            imageUrl: "https://picsum.photos/id/193/400/300",
             price: ethers.utils.parseEther("7.5"),
             size: "180",
             location: "Provence, France",
@@ -290,9 +290,9 @@ export default function HomePage() {
                 )}
 
                 {/* Featured Properties Section */}
-                <section className="py-12 bg-gray-50">
+                <section className="py-12 bg-[var(--dark-color)]">
                     <div className="max-w-7xl mx-auto px-4">
-                        <h2 className="text-3xl font-bold text-center mb-8">Propriétés à la Une</h2>
+                        <h2 className="h2 text-[var(--white-color)] text-center mb-8">Propriétés à la Une</h2>
 
                         {isLoading ? (
                             <div className="flex justify-center">
@@ -302,9 +302,9 @@ export default function HomePage() {
                             <div className="text-center text-red-500">{error}</div>
                         ) : featuredProperties.length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {featuredProperties.map((property) => (
+                                {featuredProperties.map((property, index) => (
                                     <div key={property.id}
-                                         className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+                                         className={`${index % 2 === 0 ? 'bg-[var(--dark-gray-o-color)]' : 'bg-[var(--white-color)]'} rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105`}>
                                         <div className="relative">
                                             <img
                                                 src={property.imageUrl}
@@ -319,16 +319,16 @@ export default function HomePage() {
                                             )}
                                         </div>
                                         <div className="p-4">
-                                            <h3 className="text-lg font-semibold text-gray-800 mb-1">{property.title}</h3>
-                                            <p className="text-gray-600 text-sm mb-2">{property.location}</p>
+                                            <h3 className={`text-lg font-semibold ${ index % 2 === 0 ? 'text-[var(--white-color)]' : 'text-[var(--dark-gray-t-color)]'} mb-1`}>{property.title}</h3>
+                                            <p className={`mn ${index % 2 === 0 ? 'text-[var(--gray-t-color)]' : 'text-[var(--dark-gray-t-color)]'} mb-2`}>{property.location}</p>
                                             <div className="flex justify-between items-center mb-3">
                                                 <span
                                                     className="font-bold text-blue-600">{ethers.utils.formatEther(property.price)} {tokenSymbol || "HETIC"}</span>
                                                 <div className="flex items-center">
-                                                    <span className="text-sm text-gray-600">{property.size} m²</span>
+                                                    <span className="text-sm text-[var(--purple-color)]">{property.size} m²</span>
                                                 </div>
                                             </div>
-                                            <p className="text-gray-500 text-sm mb-3 line-clamp-2">{property.description}</p>
+                                            <p className={`${index % 2 === 0 ? 'text-[var(--gray-t-color)]' : 'text-[var(--dark-gray-o-color)]'} mb-3 line-clamp-2`}>{property.description}</p>
                                             <button
                                                 onClick={() => handleBuy(property.id, property.price)}
                                                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
@@ -345,7 +345,7 @@ export default function HomePage() {
 
                         <div className="text-center mt-8">
                             <Link href="/marketplace">
-                <span className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer">
+                <span className="mn text-[var(--purple-color)] font-medium cursor-pointer">
                   Voir toutes les propriétés →
                 </span>
                             </Link>
@@ -354,9 +354,9 @@ export default function HomePage() {
                 </section>
 
                 {/* How It Works Section */}
-                <section className="py-12">
+                <section className="bg-[var(--dark-gray-o-color)] py-12">
                     <div className="max-w-7xl mx-auto px-4">
-                        <h2 className="text-3xl font-bold text-center mb-12">Comment ça marche</h2>
+                        <h2 className="text-[var(--white-color)] text-3xl font-bold text-center mb-12">Comment ça marche</h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <div className="text-center">
@@ -364,8 +364,8 @@ export default function HomePage() {
                                     className="bg-blue-100 rounded-full h-16 w-16 flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-4">
                                     1
                                 </div>
-                                <h3 className="text-xl font-semibold mb-2">Connectez votre Wallet</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-[var(--white-color)] text-xl font-semibold mb-2">Connectez votre Wallet</h3>
+                                <p className="text-[var(--gray-t-color)]">
                                     Utilisez MetaMask pour vous connecter à notre plateforme de manière sécurisée.
                                 </p>
                             </div>
@@ -375,8 +375,8 @@ export default function HomePage() {
                                     className="bg-blue-100 rounded-full h-16 w-16 flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-4">
                                     2
                                 </div>
-                                <h3 className="text-xl font-semibold mb-2">Explorez les Propriétés</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-[var(--white-color)] text-xl font-semibold mb-2">Explorez les Propriétés</h3>
+                                <p className="text-[var(--gray-t-color)]">
                                     Parcourez notre marketplace pour trouver le bien immobilier de vos rêves.
                                 </p>
                             </div>
@@ -386,8 +386,8 @@ export default function HomePage() {
                                     className="bg-blue-100 rounded-full h-16 w-16 flex items-center justify-center text-blue-600 text-2xl font-bold mx-auto mb-4">
                                     3
                                 </div>
-                                <h3 className="text-xl font-semibold mb-2">Achetez en Toute Sécurité</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-[var(--white-color)] text-xl font-semibold mb-2">Achetez en Toute Sécurité</h3>
+                                <p className="text-[var(--gray-t-color)]">
                                     Achetez des propriétés avec des {tokenSymbol || "HETIC"}, sécurisées par des
                                     contrats intelligents.
                                 </p>
