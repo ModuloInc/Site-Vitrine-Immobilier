@@ -7,6 +7,7 @@ import {ethers} from 'ethers';
 import Navbar from "@/app/component/Navbar";
 import Footer from "@/app/component/Footer";
 import {HETIC_ABI} from "@/app/abi/hetic";
+import Scene from "@/app/component/CoinView";
 
 export default function HomePage() {
     const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
@@ -251,7 +252,10 @@ export default function HomePage() {
                                 )}
                             </div>
                         </div>
-                        <div></div>
+                        <div>
+                            {/*<img src="bitcoin.svg" alt="Illustration" className="hidden md:block w-96"/>*/}
+                            <Scene />
+                        </div>
                     </div>
                 </section>
 
