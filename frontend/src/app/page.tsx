@@ -424,7 +424,7 @@ export default function HomePage() {
                         ) : featuredProperties.filter(property => property.isForSale).length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {featuredProperties.filter(property => property.isForSale).slice(0, 3).map((property, index) => (
-                                    <Link key={property.id} href={`/properties/${property.id}`} passHref>
+                                    <Link key={property.id} href={`/property/${property.id}`} passHref>
                                         <div
                                             className={`${index % 2 === 0 ? 'bg-[var(--dark-gray-o-color)]' : 'bg-[var(--white-color)]'} rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105`}>
                                             <div className="relative">
