@@ -7,7 +7,7 @@ import Footer from "@/app/component/Footer";
 import PropertyCard from "@/app/component/Property";
 import { ethers } from 'ethers';
 import { Property } from '../types/property';
-import {HETIC_ABI} from "@/app/abi/hetic";
+import {MODULOCOIN_ABI} from "@/app/abi/modulocoin";
 import { loadProperties } from '@/app/utils/propertyUtils';
 
 interface FilterState {
@@ -25,7 +25,7 @@ export default function Marketplace() {
     const [isConnected, setIsConnected] = useState<boolean>(false);
     const [userAddress, setUserAddress] = useState<string>("");
     const [tokenBalance, setTokenBalance] = useState<string>("0");
-    const [tokenSymbol, setTokenSymbol] = useState<string>("HETIC");
+    const [tokenSymbol, setTokenSymbol] = useState<string>("ModuloCoin"); // Valeur par défaut mise à jour
     const [filter, setFilter] = useState<FilterState>({
         location: '',
         minPrice: '',
@@ -33,7 +33,7 @@ export default function Marketplace() {
         minSize: '',
         maxSize: ''
     });
-    const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; // Remplacez par votre adresse de contrat
+    const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
     const connectWallet = async () => {
         try {
@@ -55,7 +55,7 @@ export default function Marketplace() {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const contract = new ethers.Contract(
                 contractAddress,
-                HETIC_ABI,
+                MODULOCOIN_ABI, // Utilisation du nouvel ABI
                 provider
             );
 
@@ -154,7 +154,7 @@ export default function Marketplace() {
             const signer = provider.getSigner();
             const contract = new ethers.Contract(
                 contractAddress,
-                HETIC_ABI,
+                MODULOCOIN_ABI, // Utilisation du nouvel ABI
                 signer
             );
 
