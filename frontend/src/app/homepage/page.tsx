@@ -324,48 +324,61 @@ export default function HomePage() {
                         ) : featuredProperties.filter(property => property.isForSale).length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {featuredProperties.slice(0, 3).map((property, index) => (
-                                    <div key={property.id}
-                                         className={`${index % 2 === 0 ? 'bg-[var(--dark-gray-o-color)]' : 'bg-[var(--white-color)]'} rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105`}>
-                                        <div className="relative">
-                                            <img
-                                                src={property.imageUrl}
-                                                alt={property.title}
-                                                className="h-48 w-full object-cover"
-                                            />
-                                            {property.isForSale ? (
-                                                <span
-                                                    className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 text-xs rounded-full">
-                                                    À Vendre
-                                                </span>
-                                            ) : (
-                                                <span
-                                                    className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 text-xs rounded-full">
-                                                    Vendu
-                                                </span>
-                                            )}
-                                        </div>
-                                        <div className="p-4">
-                                            <h3 className={`text-lg font-semibold ${index % 2 === 0 ? 'text-[var(--white-color)]' : 'text-[var(--dark-gray-t-color)]'} mb-1`}>{property.title}</h3>
-                                            <p className={`mn ${index % 2 === 0 ? 'text-[var(--gray-t-color)]' : 'text-[var(--dark-gray-t-color)]'} mb-2`}>{property.location}</p>
-                                            <div className="flex justify-between items-center mb-3">
-                                                <span
-                                                    className="font-bold text-blue-600">{ethers.utils.formatEther(property.price)} {tokenSymbol || "HETIC"}</span>
-                                                <div className="flex items-center">
-                                                    <span
-                                                        className="text-sm text-[var(--purple-color)]">{property.size} m²</span>
-                                                </div>
+                                    <Link key={property.id} href={`/property/${property.id}`} passHref>
+                                        <div
+                                            className={`${index % 2 === 0 ? 'bg-[var(--dark-gray-o-color)]' : 'bg-[var(--white-color)]'} rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105 cursor-pointer`}
+                                        >
+                                            <div className="relative">
+                                                <img
+                                                    src={property.imageUrl}
+                                                    alt={property.title}
+                                                    className="h-48 w-full object-cover"
+                                                />
+                                                {property.isForSale ? (
+                                                    <span className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 text-xs rounded-full">
+                        À Vendre
+                    </span>
+                                                ) : (
+                                                    <span className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 text-xs rounded-full">
+                        Vendu
+                    </span>
+                                                )}
                                             </div>
-                                            <p className={`${index % 2 === 0 ? 'text-[var(--gray-t-color)]' : 'text-[var(--dark-gray-o-color)]'} mb-3 line-clamp-2`}>{property.description}</p>
-                                            <button
-                                                onClick={() => handleBuy(property.id, property.price)}
-                                                className={`w-full ${property.isForSale ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'} text-white font-semibold py-2 px-4 rounded-lg transition-colors`}
-                                                disabled={!isConnected || !property.isForSale}
-                                            >
-                                                Acheter
-                                            </button>
+                                            <div className="p-4">
+                                                <h3 className={`text-lg font-semibold ${index % 2 === 0 ? 'text-[var(--white-color)]' : 'text-[var(--dark-gray-t-color)]'} mb-1`}>
+                                                    {property.title}
+                                                </h3>
+                                                <p className={`mn ${index % 2 === 0 ? 'text-[var(--gray-t-color)]' : 'text-[var(--dark-gray-t-color)]'} mb-2`}>
+                                                    {property.location}
+                                                </p>
+                                                <div className="flex justify-between items-center mb-3">
+                    <span className="font-bold text-blue-600">
+                        {ethers.utils.formatEther(property.price)} {"HETIC"}
+                    </span>
+                                                    <div className="flex items-center">
+                                                        <span className="text-sm text-[var(--purple-color)]">{property.size} m²</span>
+                                                    </div>
+                                                </div>
+                                                <p className={`${index % 2 === 0 ? 'text-[var(--gray-t-color)]' : 'text-[var(--dark-gray-o-color)]'} mb-3 line-clamp-2`}>
+                                                    {property.description}
+                                                </p>
+
+                                                {/* Bouton Acheter (Stop la propagation du clic pour éviter de déclencher le Link) */}
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation(); // Empêche la navigation quand on clique sur le bouton
+                                                        handleBuy(property.id, property.price);
+                                                    }}
+                                                    className={`w-full ${property.isForSale ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'} text-white font-semibold py-2 px-4 rounded-lg transition-colors`}
+                                                    disabled={!isConnected || !property.isForSale}
+                                                >
+                                                    Acheter
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 ))}
+
                             </div>
                         ) : (
                             <div className="text-center text-gray-500">
