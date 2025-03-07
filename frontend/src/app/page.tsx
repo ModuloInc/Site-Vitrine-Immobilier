@@ -336,7 +336,8 @@ export default function HomePage() {
                                     </button>
                                 </div>
                                 <p className="text-sm text-gray-500 mt-3">
-                                    Note: En envoyant de l'ETH, vous recevrez des tokens {tokenSymbol || "ModuloCoin"} en échange.
+                                    Note: En envoyant de l'ETH, vous recevrez des
+                                    tokens {tokenSymbol || "ModuloCoin"} en échange.
                                 </p>
                             </div>
                         </div>
