@@ -363,12 +363,51 @@ export default function Marketplace() {
                             {filteredProperties
                                 .filter(property => property.isForSale)
                                 .map((property) => (
-                                    <PropertyCard
-                                        key={property.id}
-                                        property={property}
-                                        onBuy={handleBuy}
-                                    />
+                                    <Link key={property.id} href={`/property/${property.id}`} passHref>
+                                        <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform hover:scale-105">
+                                            <div className="relative">
+                                                <img
+                                                    src={property.imageUrl}
+                                                    alt={property.title}
+                                                    className="h-48 w-full object-cover"
+                                                />
+                                                {property.isForSale ? (
+                                                    <span className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 text-xs rounded-full">
+              À Vendre
+            </span>
+                                                ) : (
+                                                    <span className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 text-xs rounded-full">
+              Vendu
+            </span>
+                                                )}
+                                            </div>
+                                            <div className="p-4">
+                                                <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                                                    {property.title}
+                                                </h3>
+                                                <p className="text-sm text-gray-600 mb-2">{property.location}</p>
+                                                <div className="flex justify-between items-center mb-3">
+            <span className="font-bold text-blue-600">
+                        {ethers.utils.formatEther(property.price)} {"HETIC"}
+                    </span>
+                                                    <span className="text-sm text-purple-600">{property.size} m²</span>
+                                                </div>
+                                                <p className="text-gray-500 mb-3 line-clamp-2">{property.description}</p>
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation(); // Empêche la navigation quand on clique sur le bouton
+                                                        handleBuy(property.id, property.price);
+                                                    }}
+                                                    className={`w-full ${property.isForSale ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'} text-white font-semibold py-2 px-4 rounded-lg transition-colors`}
+                                                    disabled={!isConnected || !property.isForSale}
+                                                >
+                                                    Acheter
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </Link>
                                 ))}
+
                         </div>
                     ) : (
                         <div className="text-center text-gray-500 my-12">
@@ -377,7 +416,8 @@ export default function Marketplace() {
                                 <div>
                                     <p>Toutes les propriétés ont été vendues!</p>
                                     <Link href="/my-properties">
-                                        <span className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer block mt-4">
+                                        <span
+                                            className="text-blue-600 hover:text-blue-800 font-medium cursor-pointer block mt-4">
                                             Voir mes propriétés →
                                         </span>
                                     </Link>
