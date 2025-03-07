@@ -10,6 +10,7 @@ import {MODULOCOIN_ABI} from "@/app/abi/modulocoin";
 import Scene from "@/app/component/CoinView";
 import {loadProperties} from '@/app/utils/propertyUtils';
 import CustomCursor from "@/app/component/CustomCursor";
+import Image from 'next/image';
 
 export default function HomePage() {
     const [featuredProperties, setFeaturedProperties] = useState<any[]>([]);
@@ -20,8 +21,9 @@ export default function HomePage() {
     const [tokenName, setTokenName] = useState<string>("");
     const [tokenSymbol, setTokenSymbol] = useState<string>("");
     const [userAddress, setUserAddress] = useState<string>("");
-    const [mintAmount, setMintAmount] = useState<string>("0.1");
+    const [mintAmount, setMintAmount] = useState<string>("100");
     const [isMinting, setIsMinting] = useState<boolean>(false);
+    const [showCustomCursor, setShowCustomCursor] = useState<boolean>(true);
 
     const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
@@ -233,11 +235,36 @@ export default function HomePage() {
             <Head>
                 <title>ImmoChain - Achat de biens immobiliers avec {tokenSymbol}</title>
                 <meta name="description"
-                      content="Plateforme d'achat de biens immobiliers utilisant la technologie blockchain"/>
+                      content="Plateforme d'achat et de vente de biens immobiliers utilisant la technologie blockchain"/>
                 <link rel="icon" href="/public/favicon.ico"/>
             </Head>
 
-            <CustomCursor />
+            <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+                <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                        type="checkbox"
+                        className="sr-only peer"
+                        checked={showCustomCursor}
+                        onChange={() => setShowCustomCursor(!showCustomCursor)}
+                    />
+                    <div
+                        className="group peer ring-0 bg-gradient-to-r from-rose-400 to-red-900 rounded-full outline-none duration-700 after:duration-300 w-24 h-12 shadow-md peer-checked:bg-gradient-to-r peer-checked:from-emerald-500 peer-checked:to-emerald-900 peer-focus:outline-none after:content-[''] after:rounded-full after:absolute after:bg-gray-50 after:outline-none after:h-10 after:w-10 after:top-1 after:left-1 peer-checked:after:translate-x-12 peer-hover:after:scale-95">
+                        <Image
+                            src="/disableFirework.svg"
+                            alt="Cursor Effect"
+                            width={100}
+                            height={100}
+                            className="group-hover:scale-65 duration-300 absolute top-1 left-12 stroke-gray-900 w-10 h-10 scale-75"
+                        />
+                    </div>
+                </label>
+
+                <span className="text-white px-3 py-1 rounded-lg">
+          Disable Cursor Effect
+        </span>
+            </div>
+            {showCustomCursor && <CustomCursor/>}
+
 
             <Navbar/>
 
@@ -286,7 +313,8 @@ export default function HomePage() {
                     <section className="py-8 bg-[var(--dark-color)]">
                         <div className="max-w-xl mx-auto px-4">
                             <div className="bg-white p-6 rounded-lg shadow-md">
-                                <h2 className="text-xl font-bold mb-4 text-[var(--dark-color)]">Obtenir des {tokenSymbol || "ModuloCoin"}</h2>
+                                <h2 className="text-xl font-bold mb-4 text-[var(--dark-color)]">Obtenir
+                                    des {tokenSymbol || "ModuloCoin"}</h2>
                                 <div className="flex flex-col sm:flex-row items-center gap-3">
                                     <input
                                         type="number"
@@ -354,7 +382,7 @@ export default function HomePage() {
                                             <p className={`mn ${index % 2 === 0 ? 'text-[var(--gray-t-color)]' : 'text-[var(--dark-gray-t-color)]'} mb-2`}>{property.location}</p>
                                             <div className="flex justify-between items-center mb-3">
                                                 <span
-                                                    className="font-bold text-blue-600">{ethers.utils.formatEther(property.price)} {tokenSymbol || "ModuloCoin"}</span>
+                                                    className="font-bold text-blue-600">{ethers.utils.formatEther(property.price)} {tokenSymbol || "HETIC"}</span>
                                                 <div className="flex items-center">
                                                     <span
                                                         className="text-sm text-[var(--purple-color)]">{property.size} m²</span>
@@ -433,7 +461,7 @@ export default function HomePage() {
                                 <h3 className="text-[var(--white-color)] text-xl font-semibold mb-2">Achetez en Toute
                                     Sécurité</h3>
                                 <p className="text-[var(--gray-t-color)]">
-                                    Achetez des propriétés avec des {tokenSymbol || "ModuloCoin"}, sécurisées par des
+                                    Achetez des propriétés avec des {tokenSymbol || "HETIC"}, sécurisées par des
                                     contrats intelligents.
                                 </p>
                             </div>

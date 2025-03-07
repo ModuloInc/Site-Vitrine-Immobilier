@@ -65,13 +65,13 @@ const Navbar: React.FC = () => {
             <div className="max-w-7xl mx-auto px-4">
                 <div className="flex justify-between h-16">
                     <div className="flex items-center">
-                        <Link href="/homepage">
+                        <Link href="/">
               <span className="bg-[var(--dark-gray-o-color)] rounded-xl flex-shrink-0 flex items-center cursor-pointer">
                 <h1 className="logo text-[var(--white-color)] m-2">ImmoChain</h1>
               </span>
                         </Link>
                         <div className="hidden md:ml-6 md:flex md:space-x-4">
-                            <Link href="/homepage">
+                            <Link href="/">
                 <span
                     className="mn text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer">
                   Accueil
