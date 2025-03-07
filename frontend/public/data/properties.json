@@ -4,10 +4,10 @@
     "title": "Villa de luxe avec piscine",
     "description": "Magnifique villa avec vue sur la mer, piscine privée et jardin luxuriant.",
     "imageUrl": "https://picsum.photos/id/193/400/300",
-    "price": "10",
+    "price": "1",
     "size": "250",
     "location": "Cannes, France",
-    "isForSale": true
+    "isForSale": false
   },
   {
     "id": "2",
@@ -27,7 +27,7 @@
     "price": "7.5",
     "size": "180",
     "location": "Provence, France",
-    "isForSale": true
+    "isForSale": false
   },
   {
     "id": "4",
@@ -37,7 +37,7 @@
     "price": "6.2",
     "size": "150",
     "location": "Lyon, France",
-    "isForSale": true
+    "isForSale": false
   },
   {
     "id": "5",

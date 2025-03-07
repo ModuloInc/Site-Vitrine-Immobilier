@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { ethers } from 'ethers';
 import Navbar from "@/app/component/Navbar";
 import Footer from "@/app/component/Footer";
+import {PROPRIETY_TITLE_ABI} from "@/app/abi/ProprietyTitle";
 
 interface Property {
     id: string;
@@ -122,44 +123,52 @@ export default function MyProperties() {
                                 Connecter Wallet
                             </button>
                         </div>
-                    ) : myProperties.length === 0 ? (
-                        <div className="text-center py-12">
-                            <p className="text-gray-600">Vous n'avez pas encore acheté de propriétés</p>
-                            <a href="/" className="text-blue-600 hover:text-blue-800 mt-4 inline-block">
-                                Explorer les propriétés disponibles
-                            </a>
-                        </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {myProperties.map((property) => (
-                                <div key={property.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-                                    <div className="relative">
-                                        <img
-                                            src={property.imageUrl}
-                                            alt={property.title}
-                                            className="h-48 w-full object-cover"
-                                        />
-                                        <span className="absolute top-2 right-2 bg-blue-500 text-white px-2 py-1 text-xs rounded-full">
-                                            Propriété Acquise
-                                        </span>
-                                    </div>
-                                    <div className="p-4">
-                                        <h3 className="text-lg font-semibold text-gray-800 mb-1">{property.title}</h3>
-                                        <p className="text-gray-600 text-sm mb-2">{property.location}</p>
-                                        <div className="flex justify-between items-center mb-3">
-                                            <span className="font-bold text-blue-600">{property.purchasePrice}</span>
-                                            <div className="flex items-center">
-                                                <span className="text-sm text-gray-600">{property.size} m²</span>
+                        <>
+                            <div className="bg-blue-900 rounded-lg px-4 py-3 text-white">
+                                <p className="text-sm">Propriétés: {myProperties.length}</p>
+                            </div>
+                            <br/>
+                            {myProperties.length === 0 ? (
+                                <div className="text-center py-12">
+                                    <p className="text-gray-600">Vous n'avez pas encore acheté de propriétés</p>
+                                    <a href="/" className="text-blue-600 hover:text-blue-800 mt-4 inline-block">
+                                        Explorer les propriétés disponibles
+                                    </a>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {myProperties.map((property) => (
+                                        <div key={property.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                                            <div className="relative">
+                                                <img
+                                                    src={property.imageUrl}
+                                                    alt={property.title}
+                                                    className="h-48 w-full object-cover"
+                                                />
+                                                <span className="absolute top-2 right-2 bg-blue-500 text-white px-2 py-1 text-xs rounded-full">
+                                                Propriété Acquise
+                                            </span>
+                                            </div>
+                                            <div className="p-4">
+                                                <h3 className="text-lg font-semibold text-gray-800 mb-1">{property.title}</h3>
+                                                <p className="text-gray-600 text-sm mb-2">{property.location}</p>
+                                                <div className="flex justify-between items-center mb-3">
+                                                    <span className="font-bold text-blue-600">{property.purchasePrice}</span>
+                                                    <div className="flex items-center">
+                                                        <span className="text-sm text-gray-600">{property.size} m²</span>
+                                                    </div>
+                                                </div>
+                                                <p className="text-gray-500 text-sm mb-3">{property.description}</p>
+                                                <div className="text-sm text-gray-500 mt-3 pt-3 border-t border-gray-200">
+                                                    <p>Acheté le: {new Date(property.purchaseDate || "").toLocaleDateString()}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <p className="text-gray-500 text-sm mb-3">{property.description}</p>
-                                        <div className="text-sm text-gray-500 mt-3 pt-3 border-t border-gray-200">
-                                            <p>Acheté le: {new Date(property.purchaseDate || "").toLocaleDateString()}</p>
-                                        </div>
-                                    </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
+                            )}
+                        </>
                     )}
                 </div>
             </main>
