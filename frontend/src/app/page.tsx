@@ -1,12 +1,13 @@
 "use client"
 
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import {ethers} from 'ethers';
 import Navbar from "@/app/component/Navbar";
 import Footer from "@/app/component/Footer";
 import {MODULOCOIN_ABI} from "@/app/abi/modulocoin";
+import {PROPRIETY_TITLE_ABI} from "@/app/abi/ProprietyTitle";
 import Scene from "@/app/component/CoinView";
 import {loadProperties} from '@/app/utils/propertyUtils';
 import CustomCursor from "@/app/component/CustomCursor";
@@ -24,8 +25,10 @@ export default function HomePage() {
     const [mintAmount, setMintAmount] = useState<string>("100");
     const [isMinting, setIsMinting] = useState<boolean>(false);
     const [showCustomCursor, setShowCustomCursor] = useState<boolean>(true);
+    const [propertyBalance, setPropertyBalance] = useState<number>(0);
 
-    const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+    const MODULOCOIN_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+    const PROPRIETY_TITLE_ADDRESS = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
 
     const connectWallet = async () => {
         try {
@@ -47,7 +50,7 @@ export default function HomePage() {
         try {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const contract = new ethers.Contract(
-                contractAddress,
+                MODULOCOIN_ADDRESS,
                 MODULOCOIN_ABI,
                 provider
             );
@@ -71,31 +74,41 @@ export default function HomePage() {
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
                 const contract = new ethers.Contract(
-                    contractAddress,
+                    MODULOCOIN_ADDRESS,
                     MODULOCOIN_ABI,
                     signer
                 );
 
-                // Convertir le montant en BigNumber pour l'envoyer en tant que value
-                const ethAmount = ethers.utils.parseEther(mintAmount);
-                console.log("Montant ETH à envoyer:", ethAmount.toString());
+                // Ask for approval confirmation
+                const confirmApproval = window.confirm("Do you want to approve the transaction?");
+                if (!confirmApproval) {
+                    setIsMinting(false);
+                    return;
+                }
 
-                // Utiliser la fonction mint avec l'option value
+                // Call the approve function
+                await approve();
+
+                // Convert the amount to BigNumber for sending as value
+                const ethAmount = ethers.utils.parseEther(mintAmount);
+                console.log("ETH amount to send:", ethAmount.toString());
+
+                // Use the mint function with the value option
                 const tx = await contract.mint(userAddress, {
                     value: ethAmount
                 });
 
-                console.log("Transaction envoyée:", tx.hash);
+                console.log("Transaction sent:", tx.hash);
                 const receipt = await tx.wait();
-                console.log("Transaction confirmée:", receipt);
+                console.log("Transaction confirmed:", receipt);
 
                 loadContractInfo(userAddress);
-                alert(`Transaction réussie! Vous avez envoyé ${mintAmount} ETH et reçu des tokens ${tokenSymbol}.`);
+                alert(`Transaction successful! You sent ${mintAmount} ETH and received ${tokenSymbol} tokens.`);
                 setMintAmount("0.1");
             }
         } catch (error) {
-            console.error("Erreur détaillée:", error);
-            alert(`Erreur lors du mint: ${(error as Error).message}`);
+            console.error("Detailed error:", error);
+            alert(`Error during minting: ${(error as Error).message}`);
         } finally {
             setIsMinting(false);
         }
@@ -115,7 +128,7 @@ export default function HomePage() {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const signer = provider.getSigner();
             const contract = new ethers.Contract(
-                contractAddress,
+                MODULOCOIN_ADDRESS,
                 MODULOCOIN_ABI,
                 signer
             );
@@ -129,17 +142,23 @@ export default function HomePage() {
 
             try {
                 // Vérifier l'allowance actuelle
-                const allowance = await contract.allowance(userAddress, contractAddress);
+                const allowance = await contract.allowance(userAddress, MODULOCOIN_ADDRESS);
 
                 // Si l'allowance est insuffisante, demander une approbation
                 if (allowance.lt(price)) {
-                    const approveTx = await contract.approve(contractAddress, price);
+                    const approveTx = await contract.approve(MODULOCOIN_ADDRESS, price);
                     await approveTx.wait();
                     console.log("Approbation accordée");
                 }
 
                 // Simuler l'achat (dans un contrat réel, vous appelleriez une fonction comme buyProperty)
-                const tx = await contract.transfer(contractAddress, price);
+                const contractPropriety = new ethers.Contract(
+                    PROPRIETY_TITLE_ADDRESS,
+                    PROPRIETY_TITLE_ABI,
+                    signer
+                );
+
+                const tx = await contractPropriety.buy(propertyId)
                 const receipt = await tx.wait();
 
                 console.log("Transaction effectuée:", receipt);
@@ -186,6 +205,46 @@ export default function HomePage() {
         }
     };
 
+    const approve = async () => {
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+            const contract = new ethers.Contract(
+                MODULOCOIN_ADDRESS,
+                MODULOCOIN_ABI,
+                signer
+            );
+
+            // Convert the mintAmount to BigNumber
+            const amountToApprove = ethers.utils.parseEther(mintAmount);
+
+            // Approve the amount
+            const tx = await contract.approve(PROPRIETY_TITLE_ADDRESS, amountToApprove);
+            await tx.wait();
+            console.log("Approbation accordée");
+        } catch (error) {
+            console.error("Erreur lors de l'approbation:", error);
+            alert("Erreur lors de l'approbation. Veuillez réessayer.");
+        }
+    };
+
+    const updatePropertyBalance = async () => {
+        try {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+            const contractPropriety = new ethers.Contract(
+                PROPRIETY_TITLE_ADDRESS,
+                PROPRIETY_TITLE_ABI,
+                signer
+            );
+
+            const balance = await contractPropriety.balanceOf(await signer.getAddress());
+            setPropertyBalance(balance.toNumber());
+        } catch (error) {
+            console.error("Erreur lors de la récupération du solde des propriétés:", error);
+        }
+    };
+
     useEffect(() => {
         // Vérifier si le wallet est déjà connecté
         if (window.ethereum) {
@@ -195,6 +254,7 @@ export default function HomePage() {
                         setIsConnected(true);
                         setUserAddress(accounts[0]);
                         loadContractInfo(accounts[0]);
+                        updatePropertyBalance();
                     }
                 });
 
@@ -204,10 +264,12 @@ export default function HomePage() {
                     setIsConnected(true);
                     setUserAddress(accounts[0]);
                     loadContractInfo(accounts[0]);
+                    updatePropertyBalance();
                 } else {
                     setIsConnected(false);
                     setUserAddress("");
                     setTokenBalance("0");
+                    setPropertyBalance(0);
                 }
             });
         }
@@ -339,6 +401,10 @@ export default function HomePage() {
                                     Note: En envoyant de l'ETH, vous recevrez des
                                     tokens {tokenSymbol || "ModuloCoin"} en échange.
                                 </p>
+                                {/*<button onClick={approve} className={"px-4 py-2 rounded-md w-full sm:w-auto bg-black text-white"}>Approve</button>*/}
+                                <div className="bg-blue-900 rounded-lg px-4 py-3 text-white">
+                                    <p className="text-sm">Propriétés: {propertyBalance}</p>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -347,7 +413,7 @@ export default function HomePage() {
                 {/* Featured Properties Section */}
                 <section className="py-12 bg-[var(--dark-color)]">
                     <div className="max-w-7xl mx-auto px-4">
-                        <h2 className="h2 text-[var(--white-color)] text-center mb-8">Propriétés à la Une</h2>
+                    <h2 className="h2 text-[var(--white-color)] text-center mb-8">Propriétés à la Une</h2>
 
                         {isLoading ? (
                             <div className="flex justify-center">
@@ -357,7 +423,7 @@ export default function HomePage() {
                             <div className="text-center text-red-500">{error}</div>
                         ) : featuredProperties.filter(property => property.isForSale).length > 0 ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {featuredProperties.slice(0, 3).map((property, index) => (
+                                {featuredProperties.filter(property => property.isForSale).slice(0, 3).map((property, index) => (
                                     <div key={property.id}
                                          className={`${index % 2 === 0 ? 'bg-[var(--dark-gray-o-color)]' : 'bg-[var(--white-color)]'} rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105`}>
                                         <div className="relative">
