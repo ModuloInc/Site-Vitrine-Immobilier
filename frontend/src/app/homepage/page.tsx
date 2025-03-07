@@ -6,7 +6,7 @@ import Link from 'next/link';
 import {ethers} from 'ethers';
 import Navbar from "@/app/component/Navbar";
 import Footer from "@/app/component/Footer";
-import {HETIC_ABI} from "@/app/abi/hetic";
+import {MODULOCOIN_ABI} from "@/app/abi/modulocoin";// Modifier l'import pour utiliser le nouvel ABI
 import Scene from "@/app/component/CoinView";
 import {loadProperties} from '@/app/utils/propertyUtils';
 import CustomCursor from "@/app/component/CustomCursor";
@@ -20,7 +20,7 @@ export default function HomePage() {
     const [tokenName, setTokenName] = useState<string>("");
     const [tokenSymbol, setTokenSymbol] = useState<string>("");
     const [userAddress, setUserAddress] = useState<string>("");
-    const [mintAmount, setMintAmount] = useState<string>("100");
+    const [mintAmount, setMintAmount] = useState<string>("0.1"); // Montant en ETH, valeur plus petite par défaut
     const [isMinting, setIsMinting] = useState<boolean>(false);
 
     const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
@@ -46,7 +46,7 @@ export default function HomePage() {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
             const contract = new ethers.Contract(
                 contractAddress,
-                HETIC_ABI,
+                MODULOCOIN_ABI, // Utiliser le nouvel ABI
                 provider
             );
 
@@ -70,25 +70,30 @@ export default function HomePage() {
                 const signer = provider.getSigner();
                 const contract = new ethers.Contract(
                     contractAddress,
-                    HETIC_ABI,
+                    MODULOCOIN_ABI, // Utiliser le nouvel ABI
                     signer
                 );
 
-                const amountToMint = ethers.utils.parseEther(mintAmount);
+                // Convertir le montant en BigNumber pour l'envoyer en tant que value
+                const ethAmount = ethers.utils.parseEther(mintAmount);
+                console.log("Montant ETH à envoyer:", ethAmount.toString());
 
-                const tx = await contract.mint(userAddress, amountToMint);
-                await tx.wait();
+                // Utiliser la fonction mint avec l'option value
+                const tx = await contract.mint(userAddress, {
+                    value: ethAmount
+                });
+
+                console.log("Transaction envoyée:", tx.hash);
+                const receipt = await tx.wait();
+                console.log("Transaction confirmée:", receipt);
 
                 loadContractInfo(userAddress);
-
-                alert(`${mintAmount} ${tokenSymbol} ont été mintés avec succès!`);
-
-                setMintAmount("");
-
+                alert(`Transaction réussie! Vous avez envoyé ${mintAmount} ETH et reçu des tokens ${tokenSymbol}.`);
+                setMintAmount("0.1");
             }
         } catch (error) {
-            console.error("Erreur lors du mint des tokens:", error);
-            alert("Erreur lors du mint. Vérifiez que vous avez les droits nécessaires.");
+            console.error("Erreur détaillée:", error);
+            alert(`Erreur lors du mint: ${(error as Error).message}`);
         } finally {
             setIsMinting(false);
         }
@@ -109,7 +114,7 @@ export default function HomePage() {
             const signer = provider.getSigner();
             const contract = new ethers.Contract(
                 contractAddress,
-                HETIC_ABI,
+                MODULOCOIN_ABI, // Utiliser le nouvel ABI
                 signer
             );
 
@@ -228,7 +233,7 @@ export default function HomePage() {
             <Head>
                 <title>ImmoChain - Achat de biens immobiliers avec {tokenSymbol}</title>
                 <meta name="description"
-                      content="Plateforme d'achat et de vente de biens immobiliers utilisant la technologie blockchain"/>
+                      content="Plateforme d'achat de biens immobiliers utilisant la technologie blockchain"/>
                 <link rel="icon" href="/public/favicon.ico"/>
             </Head>
 
@@ -288,8 +293,9 @@ export default function HomePage() {
                                         value={mintAmount}
                                         onChange={(e) => setMintAmount(e.target.value)}
                                         className="flex-1 p-2 border border-gray-300 rounded-md w-full sm:w-auto text-[var(--dark-color)]"
-                                        placeholder="Montant"
-                                        min="1"
+                                        placeholder="Montant ETH"
+                                        min="0.001"
+                                        step="0.01"
                                     />
                                     <button
                                         onClick={mintTokens}
@@ -298,12 +304,11 @@ export default function HomePage() {
                                             ? 'bg-gray-400 cursor-not-allowed'
                                             : 'bg-green-600 hover:bg-green-700'} text-white`}
                                     >
-                                        {isMinting ? 'En cours...' : `Buy ${tokenSymbol || "ModuloCoin"}`}
+                                        {isMinting ? 'En cours...' : `Acheter des ${tokenSymbol || "ModuloCoin"}`}
                                     </button>
                                 </div>
                                 <p className="text-sm text-gray-500 mt-3">
-                                    Note: Cette fonction est disponible uniquement pour les tests. En production, les
-                                    tokens seraient distribués par d'autres mécanismes.
+                                    Note: En envoyant de l'ETH, vous recevrez des tokens {tokenSymbol || "ModuloCoin"} en échange.
                                 </p>
                             </div>
                         </div>
@@ -349,7 +354,7 @@ export default function HomePage() {
                                             <p className={`mn ${index % 2 === 0 ? 'text-[var(--gray-t-color)]' : 'text-[var(--dark-gray-t-color)]'} mb-2`}>{property.location}</p>
                                             <div className="flex justify-between items-center mb-3">
                                                 <span
-                                                    className="font-bold text-blue-600">{ethers.utils.formatEther(property.price)} {tokenSymbol || "HETIC"}</span>
+                                                    className="font-bold text-blue-600">{ethers.utils.formatEther(property.price)} {tokenSymbol || "ModuloCoin"}</span>
                                                 <div className="flex items-center">
                                                     <span
                                                         className="text-sm text-[var(--purple-color)]">{property.size} m²</span>
@@ -428,7 +433,7 @@ export default function HomePage() {
                                 <h3 className="text-[var(--white-color)] text-xl font-semibold mb-2">Achetez en Toute
                                     Sécurité</h3>
                                 <p className="text-[var(--gray-t-color)]">
-                                    Achetez des propriétés avec des {tokenSymbol || "HETIC"}, sécurisées par des
+                                    Achetez des propriétés avec des {tokenSymbol || "ModuloCoin"}, sécurisées par des
                                     contrats intelligents.
                                 </p>
                             </div>
